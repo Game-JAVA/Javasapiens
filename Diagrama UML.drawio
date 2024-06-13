@@ -1,11 +1,11 @@
-<mxfile host="app.diagrams.net" modified="2024-06-12T17:08:17.482Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36" etag="cyRaT0b-3JagBFJ7CLvo" version="24.5.4" type="device">
+<mxfile host="app.diagrams.net" modified="2024-06-13T16:18:49.648Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36" etag="xLHFhA0ZIKvi8kj9eklv" version="24.5.4" type="device">
   <diagram name="Página-1" id="P7TGbWkqGXTXEgWnY136">
     <mxGraphModel dx="910" dy="459" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="bAjIouGLIPzOyy9t5z-3-2" value="Shape" style="swimlane;fontStyle=2;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;" parent="1" vertex="1">
-          <mxGeometry x="130" y="210" width="160" height="210" as="geometry">
+        <mxCell id="bAjIouGLIPzOyy9t5z-3-2" value="Character" style="swimlane;fontStyle=2;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;" parent="1" vertex="1">
+          <mxGeometry x="130" y="210" width="160" height="234" as="geometry">
             <mxRectangle x="230" y="140" width="160" height="26" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -36,8 +36,11 @@
         <mxCell id="bAjIouGLIPzOyy9t5z-3-104" value="+ collision(int, int) : void" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="bAjIouGLIPzOyy9t5z-3-2" vertex="1">
           <mxGeometry y="182" width="160" height="26" as="geometry" />
         </mxCell>
+        <mxCell id="AeepPpzmWaZdeKzGAGTf-1" value="+ shape(int, int) : void" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="bAjIouGLIPzOyy9t5z-3-2" vertex="1">
+          <mxGeometry y="208" width="160" height="26" as="geometry" />
+        </mxCell>
         <mxCell id="bAjIouGLIPzOyy9t5z-3-10" value="Spacecraft" style="swimlane;fontStyle=0;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;" parent="1" vertex="1">
-          <mxGeometry y="580" width="160" height="170" as="geometry">
+          <mxGeometry y="580" width="160" height="118" as="geometry">
             <mxRectangle x="130" y="380" width="160" height="26" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -50,14 +53,8 @@
         <mxCell id="bAjIouGLIPzOyy9t5z-3-13" value="+ shoot() : void" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="bAjIouGLIPzOyy9t5z-3-10" vertex="1">
           <mxGeometry y="60" width="160" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="bAjIouGLIPzOyy9t5z-3-14" value="+ shootSound() : void" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="bAjIouGLIPzOyy9t5z-3-10" vertex="1">
-          <mxGeometry y="86" width="160" height="26" as="geometry" />
-        </mxCell>
-        <mxCell id="bAjIouGLIPzOyy9t5z-3-15" value="+ moveMouse() : void" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="bAjIouGLIPzOyy9t5z-3-10" vertex="1">
-          <mxGeometry y="112" width="160" height="26" as="geometry" />
-        </mxCell>
         <mxCell id="bAjIouGLIPzOyy9t5z-3-17" value="+ keyboard() : void" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="bAjIouGLIPzOyy9t5z-3-10" vertex="1">
-          <mxGeometry y="138" width="160" height="32" as="geometry" />
+          <mxGeometry y="86" width="160" height="32" as="geometry" />
         </mxCell>
         <mxCell id="bAjIouGLIPzOyy9t5z-3-18" value="" style="endArrow=block;endSize=10;endFill=0;shadow=0;strokeWidth=1;rounded=0;curved=0;edgeStyle=elbowEdgeStyle;elbow=vertical;" parent="1" source="bAjIouGLIPzOyy9t5z-3-10" target="bAjIouGLIPzOyy9t5z-3-2" edge="1">
           <mxGeometry width="160" relative="1" as="geometry">
@@ -108,7 +105,7 @@
         <mxCell id="bAjIouGLIPzOyy9t5z-3-31" value="+ run() : void" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="bAjIouGLIPzOyy9t5z-3-25" vertex="1">
           <mxGeometry y="78" width="160" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="nKH0z2mBxGqEpScFSGRB-1" value="+ startGame() : void" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="bAjIouGLIPzOyy9t5z-3-25">
+        <mxCell id="nKH0z2mBxGqEpScFSGRB-1" value="+ startGame() : void" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="bAjIouGLIPzOyy9t5z-3-25" vertex="1">
           <mxGeometry y="104" width="160" height="26" as="geometry" />
         </mxCell>
         <mxCell id="bAjIouGLIPzOyy9t5z-3-33" value="Screen" style="swimlane;fontStyle=2;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;" parent="1" vertex="1">
