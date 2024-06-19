@@ -17,6 +17,7 @@ public class Phase extends JPanel implements ActionListener {
     private Spacecraft spacecraft;
     private Timer timer;
     private List<Asteroid> asteroids;
+    private boolean inGame;
 
     // Tudo o que possui a Phase
     public Phase() {
@@ -32,7 +33,7 @@ public class Phase extends JPanel implements ActionListener {
         addKeyListener(new TecladoAdapter());
 
         asteroids = new ArrayList<>();
-        for (int i = 0; i < 40; i++) {
+        for (int i = 0; i < 10; i++) {
             Asteroid asteroid = new Asteroid((int) (Math.random() * 1024), (int) (Math.random() * 728) - 728);
             asteroid.load();
             asteroids.add(asteroid);
@@ -40,6 +41,8 @@ public class Phase extends JPanel implements ActionListener {
 
         timer = new Timer(5, this);
         timer.start();
+
+        inGame = true;
     }
 
     // Colocando gráfico no background e no player para serem utilizados
@@ -47,14 +50,20 @@ public class Phase extends JPanel implements ActionListener {
     public void paint(Graphics g) {
         super.paint(g); // Garante que os componentes da superclasse sejam desenhados
         Graphics2D graficos = (Graphics2D) g;
-        graficos.drawImage(background, 0, 0, null);
-        graficos.drawImage(spacecraft.getImage(), spacecraft.getX(), spacecraft.getY(), this);
+        if(inGame == true) {
+            graficos.drawImage(background, 0, 0, null);
+            graficos.drawImage(spacecraft.getImage(), spacecraft.getX(), spacecraft.getY(), this);
 
-        for (Asteroid asteroid : asteroids) {
-            graficos.drawImage(asteroid.getImage(), asteroid.getX(), asteroid.getY(), this);
+            for (Asteroid asteroid : asteroids) {
+                graficos.drawImage(asteroid.getImage(), asteroid.getX(), asteroid.getY(), this);
+            }
+            Toolkit.getDefaultToolkit().sync(); // Sincroniza a pintura para evitar o tearing
         }
-
-        Toolkit.getDefaultToolkit().sync(); // Sincroniza a pintura para evitar o tearing
+        else {
+            ImageIcon gameOver = new ImageIcon("res\\GameOver.jpg");
+            graficos.drawImage(gameOver.getImage(),0,0,null);
+            Toolkit.getDefaultToolkit().sync(); // Sincroniza a pintura para evitar o tearing
+        }
         g.dispose();
     }
 
@@ -65,7 +74,24 @@ public class Phase extends JPanel implements ActionListener {
         for (Asteroid asteroid : asteroids) {
             asteroid.move();
         }
+        checkCollisions();
         repaint();
+    }
+
+    public void checkCollisions(){
+        Rectangle shapeSpacecraft = spacecraft.getBounds();
+        Rectangle shapeAsteroid;
+
+        for(int i = 0; i < asteroids.size(); i++){
+            Asteroid tempAsteroid = asteroids.get(i);
+            shapeAsteroid = tempAsteroid.getBounds();
+                if(shapeSpacecraft.intersects(shapeAsteroid)){
+                    spacecraft.setVisible(false);
+                    tempAsteroid.setVisible(false);
+                    inGame = false;
+                }
+        }
+
     }
 
     // Teclado pressionado

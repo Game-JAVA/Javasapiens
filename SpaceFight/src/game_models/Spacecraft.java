@@ -1,5 +1,6 @@
 package game_models;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class Spacecraft extends Character {
@@ -31,6 +32,10 @@ public class Spacecraft extends Character {
         if (newY >= 0 - (getHeight()*0.5) && newY <= SCREEN_HEIGHT - (getHeight()*0.75)) {
             super.setY(newY);
         }
+    }
+
+    public Rectangle getBounds(){
+        return new Rectangle (getX()-5,getY()+20, getWidth(), getHeight());
     }
 
     //Reconhecer quando a tecla está pressionada

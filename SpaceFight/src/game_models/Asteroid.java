@@ -1,5 +1,7 @@
 package game_models;
 
+import java.awt.*;
+
 public class Asteroid extends Character {
     private int speed;
 
@@ -11,6 +13,11 @@ public class Asteroid extends Character {
     public void load() {
         super.load("res\\asteroid.gif");
     }
+
+    public Rectangle getBounds(){
+        return new Rectangle(getX(),getY(), getWidth(), getHeight());
+    }
+
 
     public void move() {
         setY(getY() + speed);
