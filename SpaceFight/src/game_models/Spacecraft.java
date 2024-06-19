@@ -1,16 +1,21 @@
 package game_models;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Spacecraft extends Character {
 
     private int dx, dy;
+    private List<Shoot> shoots;
     private final int SCREEN_WIDTH = 1024;  // Largura da tela
     private final int SCREEN_HEIGHT = 728;  // Altura da tela
 
     //Pegando x e y do pai
     public Spacecraft(int x, int y) {
         super(x,y);
+
+        shoots = new ArrayList<Shoot>();
     }
 
 
@@ -33,10 +38,17 @@ public class Spacecraft extends Character {
         }
     }
 
+    public void singleShot() {
+        this.shoots.add(new Shoot(getX() + getWidth() / 11, getY() + getHeight() / 4));
+    }
+
     //Reconhecer quando a tecla está pressionada
     public void keyPressed(KeyEvent tecla){
         int code = tecla.getKeyCode();
 
+        if(code == KeyEvent.VK_Z){
+            singleShot();
+        }
         if(code == KeyEvent.VK_UP){
             dy=-3;
         }
@@ -66,5 +78,9 @@ public class Spacecraft extends Character {
         if(code == KeyEvent.VK_LEFT){
             dx=0;
         }
+    }
+
+    public List<Shoot> getShoots() {
+        return shoots;
     }
 }

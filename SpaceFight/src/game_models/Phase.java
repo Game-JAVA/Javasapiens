@@ -50,6 +50,13 @@ public class Phase extends JPanel implements ActionListener {
         graficos.drawImage(background, 0, 0, null);
         graficos.drawImage(spacecraft.getImage(), spacecraft.getX(), spacecraft.getY(), this);
 
+        List<Shoot> shoots = spacecraft.getShoots();
+        for (int i = 0; i < shoots.size(); i++){
+            Shoot m = shoots.get(i);
+            m.load();
+            graficos.drawImage(m.getImage(), m.getX(), m.getY(), this);
+        }
+
         for (Asteroid asteroid : asteroids) {
             graficos.drawImage(asteroid.getImage(), asteroid.getX(), asteroid.getY(), this);
         }
@@ -62,6 +69,11 @@ public class Phase extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         spacecraft.move();
+        List<Shoot> shoots = spacecraft.getShoots();
+        for (int i = 0; i < shoots.size(); i++){
+            Shoot m = shoots.get(i);
+            m.move();
+        }
         for (Asteroid asteroid : asteroids) {
             asteroid.move();
         }
