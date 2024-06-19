@@ -9,7 +9,7 @@ public class Asteroid extends Character {
     }
 
     public void load() {
-        super.load("res\\spacecraft.gif");
+        super.load("res\\asteroid.gif");
     }
 
     public void move() {
