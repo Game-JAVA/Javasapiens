@@ -6,75 +6,56 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.List;
 
-public class Phase extends JPanel implements ActionListener {
+public class Phase extends JPanel implements ActionListener{
     private Image background;
     private Spacecraft spacecraft;
     private Timer timer;
-    private List<Asteroid> asteroids;
 
-    // Tudo o que possui a Phase
-    public Phase() {
+    //Tudo o que possue a Phase
+    public Phase(){
         setFocusable(true);
         setDoubleBuffered(true);
 
         ImageIcon reference = new ImageIcon("res\\background.jpeg");
         background = reference.getImage();
 
-        spacecraft = new Spacecraft(360, 450);
+        spacecraft = new Spacecraft(360,450);
         spacecraft.load();
 
         addKeyListener(new TecladoAdapter());
 
-        asteroids = new ArrayList<>();
-        for (int i = 0; i < 40; i++) {
-            Asteroid asteroid = new Asteroid((int)(Math.random() * 1024), (int)(Math.random() * 728) - 728);
-            asteroid.load();
-            asteroids.add(asteroid);
-        }
-
-        timer = new Timer(5, this);
+        timer = new Timer(5,this);
         timer.start();
     }
 
-    // Colocando gráfico no background e no player para serem utilizados
-    @Override
-    public void paint(Graphics g) {
-        super.paint(g); // Garante que os componentes da superclasse sejam desenhados
+    //Colocando grafico no background e no player para serem utilizados
+    public void paint(Graphics g){
         Graphics2D graficos = (Graphics2D) g;
-        graficos.drawImage(background, 0, 0, null);
+        graficos.drawImage(background,0,0,null);
         graficos.drawImage(spacecraft.getImage(), spacecraft.getX(), spacecraft.getY(), this);
 
-        for (Asteroid asteroid : asteroids) {
-            graficos.drawImage(asteroid.getImage(), asteroid.getX(), asteroid.getY(), this);
-        }
-
-        Toolkit.getDefaultToolkit().sync(); // Sincroniza a pintura para evitar o tearing
         g.dispose();
+
     }
 
-    // Atualiza a localização dos objetos
+    //Atualiza a localização do player
     @Override
     public void actionPerformed(ActionEvent e) {
         spacecraft.move();
-        for (Asteroid asteroid : asteroids) {
-            asteroid.move();
-        }
         repaint();
     }
 
-    // Teclado pressionado
-    private class TecladoAdapter extends KeyAdapter {
+    //Teclado pressionado
+    private class TecladoAdapter extends KeyAdapter{
         @Override
-        public void keyPressed(KeyEvent e) {
+        public void keyPressed(KeyEvent e){
             spacecraft.keyPressed(e);
         }
 
-        // Teclado não pressionado
+        //Teclado não pressionado
         @Override
-        public void keyReleased(KeyEvent e) {
+        public void keyReleased(KeyEvent e){
             spacecraft.keyRelease(e);
         }
     }
