@@ -54,6 +54,7 @@ public class Spacecraft extends Character {
 
             if (code == KeyEvent.VK_Z) {
                 singleShot();
+                Sound.SoundShoot.play();
             }
             if (code == KeyEvent.VK_UP) {
                 dy = -3;

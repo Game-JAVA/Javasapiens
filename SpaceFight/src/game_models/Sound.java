@@ -7,9 +7,10 @@ import java.io.IOException;
 public class Sound {
     private Clip clip;
 
-    public static final Sound Explosion = new Sound("");
-    public static final Sound Soundgame = new Sound("");
-    public static final Sound SoundShoot = new Sound("");
+    public static final Sound Explosion = new Sound("res\\Explosion.wav");
+    public static final Sound Soundgame = new Sound("res\\som de fundo.wav");
+    public static final Sound SoundShoot = new Sound("res\\Laser_Shoot.wav");
+    public static final Sound Kill = new Sound("res\\sound_kill.wav");
 
     private Sound(String filename) {
         try {

@@ -30,6 +30,10 @@ public class Phase extends JPanel implements ActionListener {
         spacecraft = new Spacecraft(360, 450);
         spacecraft.load();
 
+
+        Sound.Soundgame.play();
+
+
         addKeyListener(new TecladoAdapter());
 
         asteroids = new ArrayList<>();
@@ -78,11 +82,13 @@ public class Phase extends JPanel implements ActionListener {
         Rectangle shapeShoot;
         Rectangle shapeAsteroid;
 
+
         for(int i = 0; i < asteroids.size(); i++){
             Asteroid tempAsteroid = asteroids.get(i);
             shapeAsteroid = tempAsteroid.getBounds();
             if(shapeSpacecraft.intersects(shapeAsteroid)){
                 tempAsteroid.setVisible(false);
+                Sound.Kill.play();
                 inGame = false;
             }
         }
@@ -94,9 +100,9 @@ public class Phase extends JPanel implements ActionListener {
                 Asteroid tempAsteroid = asteroids.get(k);
                 shapeAsteroid = tempAsteroid.getBounds();
                 if(shapeShoot.intersects(shapeAsteroid)){
-                    System.out.println("Colisão detectada entre shoot " + j + " e asteroid " + k);
                     tempAsteroid.setVisible(false);
                     tempShoot.setVisible(false);
+                    Sound.Explosion.play();
                 }
             }
         }
