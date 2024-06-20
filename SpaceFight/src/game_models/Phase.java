@@ -52,17 +52,16 @@ public class Phase extends JPanel implements ActionListener {
         if (inGame == true) {
             graficos.drawImage(background, 0, 0, null);
             graficos.drawImage(spacecraft.getImage(), spacecraft.getX(), spacecraft.getY(), this);
-
             for (Asteroid asteroid : asteroids) {
                 graficos.drawImage(asteroid.getImage(), asteroid.getX(), asteroid.getY(), this);
             }
-
             List<Shoot> shoots = spacecraft.getShoots();
-            for (int i = 0; i < shoots.size(); i++) {
-                Shoot m = shoots.get(i);
-                m.load();
-                graficos.drawImage(m.getImage(), m.getX(), m.getY(), this);
-            }
+        for (int i = 0; i < shoots.size(); i++){
+            Shoot m = shoots.get(i);
+            m.load();
+            graficos.drawImage(m.getImage(), m.getX(), m.getY(), this);
+        }
+
             Toolkit.getDefaultToolkit().sync(); // Sincroniza a pintura para evitar o tearing
         } else {
             ImageIcon gameOver = new ImageIcon("res\\GameOver.png");

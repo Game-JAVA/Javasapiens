@@ -45,7 +45,6 @@ public class Spacecraft extends Character {
 
     public void singleShot() {
         this.shoots.add(new Shoot(getX() + getWidth() - 150, getY() + getHeight() - 120));
-    }
 
     //Reconhecer quando a tecla está pressionada
     public void keyPressed(KeyEvent tecla){
