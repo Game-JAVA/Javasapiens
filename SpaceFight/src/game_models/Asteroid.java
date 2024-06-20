@@ -15,9 +15,8 @@ public class Asteroid extends Character {
     }
 
     public Rectangle getBounds(){
-        return new Rectangle(getX(),getY(), getWidth(), getHeight());
+        return new Rectangle(getX(),getY(), getWidth()-46, getHeight());
     }
-
 
     public void move() {
         setY(getY() + speed);

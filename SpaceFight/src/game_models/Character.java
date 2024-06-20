@@ -13,7 +13,6 @@ public class Character {
     public Character(int x, int y){
         this.x = x;
         this.y = y;
-        isVisible = true;
     }
 
     //Imagem e tamanho do personagem
@@ -60,7 +59,7 @@ public class Character {
         return width;
     }
 
-    public void setWidth() {
+    public void setWidth(int width) {
         this.width = width;
     }
 
