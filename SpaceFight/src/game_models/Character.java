@@ -7,7 +7,6 @@ public class Character {
     private Image image;
     private int x, y;
     private int height, width;
-    private boolean isVisible;
 
     //Posição da criação do personagem
     public Character(int x, int y){
@@ -61,13 +60,5 @@ public class Character {
 
     public void setWidth(int width) {
         this.width = width;
-    }
-
-    public boolean isVisible() {
-        return isVisible;
-    }
-
-    public void setVisible(boolean visible) {
-        isVisible = visible;
     }
 }

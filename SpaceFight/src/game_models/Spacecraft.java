@@ -8,6 +8,7 @@ import java.util.List;
 public class Spacecraft extends Character {
 
     private int dx, dy;
+    private boolean isVisible;
     private List<Shoot> shoots;
     private final int SCREEN_WIDTH = 1024;  // Largura da tela
     private final int SCREEN_HEIGHT = 728;  // Altura da tela
@@ -15,7 +16,7 @@ public class Spacecraft extends Character {
     //Pegando x e y do pai
     public Spacecraft(int x, int y) {
         super(x, y);
-
+        isVisible = true;
         shoots = new ArrayList<Shoot>();
     }
 
@@ -44,7 +45,7 @@ public class Spacecraft extends Character {
     }
 
     public void singleShot() {
-        this.shoots.add(new Shoot(getX() + getWidth() - 150, getY() + getHeight() - 120));
+        this.shoots.add(new Shoot(getX() + getWidth() - 42, getY() + getHeight() - 54));
     }
 
         //Reconhecer quando a tecla está pressionada
@@ -87,5 +88,13 @@ public class Spacecraft extends Character {
         }
     public List<Shoot> getShoots() {
         return shoots;
+    }
+
+    public boolean isVisible() {
+        return isVisible;
+    }
+
+    public void setVisible(boolean visible) {
+        isVisible = visible;
     }
 }

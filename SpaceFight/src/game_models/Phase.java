@@ -52,7 +52,9 @@ public class Phase extends JPanel implements ActionListener {
         if (inGame == true) {
             graficos.drawImage(background, 0, 0, null);
             graficos.drawImage(spacecraft.getImage(), spacecraft.getX(), spacecraft.getY(), this);
-            for (Asteroid asteroid : asteroids) {
+            for (int j = 0; j < asteroids.size(); j++) {
+                Asteroid asteroid = asteroids.get(j);
+                asteroid.load();
                 graficos.drawImage(asteroid.getImage(), asteroid.getX(), asteroid.getY(), this);
             }
             List<Shoot> shoots = spacecraft.getShoots();
@@ -73,18 +75,31 @@ public class Phase extends JPanel implements ActionListener {
 
     public void checkCollisions(){
         Rectangle shapeSpacecraft = spacecraft.getBounds();
+        Rectangle shapeShoot;
         Rectangle shapeAsteroid;
 
         for(int i = 0; i < asteroids.size(); i++){
             Asteroid tempAsteroid = asteroids.get(i);
             shapeAsteroid = tempAsteroid.getBounds();
             if(shapeSpacecraft.intersects(shapeAsteroid)){
-                spacecraft.setVisible(false);
                 tempAsteroid.setVisible(false);
                 inGame = false;
             }
         }
-
+        List<Shoot> shoots = spacecraft.getShoots();
+        for (int j = 0; j < shoots.size(); j++){
+            Shoot tempShoot = shoots.get(j);
+            shapeShoot = tempShoot.getBounds();
+            for (int k = 0; k < asteroids.size(); k++){
+                Asteroid tempAsteroid = asteroids.get(k);
+                shapeAsteroid = tempAsteroid.getBounds();
+                if(shapeShoot.intersects(shapeAsteroid)){
+                    System.out.println("Colisão detectada entre shoot " + j + " e asteroid " + k);
+                    tempAsteroid.setVisible(false);
+                    tempShoot.setVisible(false);
+                }
+            }
+        }
     }
 
     // Atualiza a localização dos objetos
@@ -94,10 +109,21 @@ public class Phase extends JPanel implements ActionListener {
         List<Shoot> shoots = spacecraft.getShoots();
         for (int i = 0; i < shoots.size(); i++){
             Shoot m = shoots.get(i);
-            m.move();
+            if(m.isVisible()){
+                m.move();
+            }
+            else{
+                shoots.remove(i);
+            }
         }
-        for (Asteroid asteroid : asteroids) {
-            asteroid.move();
+        for (int j = 0; j < asteroids.size(); j++){
+            Asteroid asteroid = asteroids.get(j);
+            if(asteroid.isVisible()){
+                asteroid.move();
+            }
+            else {
+                asteroids.remove(j);
+            }
         }
         checkCollisions();
         repaint();
