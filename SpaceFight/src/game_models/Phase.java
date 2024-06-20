@@ -65,7 +65,7 @@ public class Phase extends JPanel implements ActionListener {
             }
             Toolkit.getDefaultToolkit().sync(); // Sincroniza a pintura para evitar o tearing
         } else {
-            ImageIcon gameOver = new ImageIcon("res\\GameOver.jpg");
+            ImageIcon gameOver = new ImageIcon("res\\GameOver.png");
             graficos.drawImage(gameOver.getImage(), 0, 0, null);
             Toolkit.getDefaultToolkit().sync(); // Sincroniza a pintura para evitar o tearing
         }
