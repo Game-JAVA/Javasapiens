@@ -1,5 +1,6 @@
 package game_models;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,10 @@ public class Spacecraft extends Character {
         super.load("res\\spacecraft.gif");
     }
 
+    public Rectangle getBounds(){
+        return new Rectangle (getX()-5,getY()+20, getWidth(), getHeight());
+    }
+
     //Movimentação da nave
     public void move() {
         int newX = getX() + dx;
@@ -39,8 +44,7 @@ public class Spacecraft extends Character {
     }
 
     public void singleShot() {
-        this.shoots.add(new Shoot(getX() + getWidth() / 11, getY() + getHeight() / 4));
-    }
+        this.shoots.add(new Shoot(getX() + getWidth() - 150, getY() + getHeight() - 120));
 
     //Reconhecer quando a tecla está pressionada
     public void keyPressed(KeyEvent tecla){
