@@ -78,6 +78,7 @@ public class Phase extends JPanel implements ActionListener {
         }
 
         if (asteroidsKill == 60){
+            inGame = false;
             ImageIcon gameOver = new ImageIcon("res\\YouWin.jpeg");
             graficos.drawImage(gameOver.getImage(), 0, 0, null);
             Toolkit.getDefaultToolkit().sync(); // Sincroniza a pintura para evitar o tearing
