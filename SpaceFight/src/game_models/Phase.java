@@ -31,13 +31,13 @@ public class Phase extends JPanel implements ActionListener {
         spacecraft.load();
 
 
-        Sound.Soundgame.play();
+        Sound.soundgame.loop();
 
 
         addKeyListener(new TecladoAdapter());
 
         asteroids = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 30; i++) {
             Asteroid asteroid = new Asteroid((int) (Math.random() * 1024), (int) (Math.random() * 728) - 728);
             asteroid.load();
             asteroids.add(asteroid);
@@ -86,10 +86,12 @@ public class Phase extends JPanel implements ActionListener {
         for(int i = 0; i < asteroids.size(); i++){
             Asteroid tempAsteroid = asteroids.get(i);
             shapeAsteroid = tempAsteroid.getBounds();
-            if(shapeSpacecraft.intersects(shapeAsteroid)){
-                tempAsteroid.setVisible(false);
-                Sound.Kill.play();
-                inGame = false;
+            if (inGame) {
+                if(shapeSpacecraft.intersects(shapeAsteroid)){
+                    tempAsteroid.setVisible(false);
+                    Sound.kill.play();
+                    inGame = false;
+                }
             }
         }
         List<Shoot> shoots = spacecraft.getShoots();
@@ -99,10 +101,12 @@ public class Phase extends JPanel implements ActionListener {
             for (int k = 0; k < asteroids.size(); k++){
                 Asteroid tempAsteroid = asteroids.get(k);
                 shapeAsteroid = tempAsteroid.getBounds();
-                if(shapeShoot.intersects(shapeAsteroid)){
-                    tempAsteroid.setVisible(false);
-                    tempShoot.setVisible(false);
-                    Sound.Explosion.play();
+                if (inGame){
+                    if(shapeShoot.intersects(shapeAsteroid)){
+                        tempAsteroid.setVisible(false);
+                        tempShoot.setVisible(false);
+                        Sound.explosion.play();
+                    }
                 }
             }
         }
@@ -139,7 +143,8 @@ public class Phase extends JPanel implements ActionListener {
     private class TecladoAdapter extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
-            spacecraft.keyPressed(e);
+            if (inGame)
+                spacecraft.keyPressed(e);
         }
 
         // Teclado não pressionado
