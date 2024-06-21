@@ -57,16 +57,16 @@ public class Spacecraft extends Character {
                 Sound.soundShoot.play();
             }
             if (code == KeyEvent.VK_UP) {
-                dy = -3;
+                dy = -4;
             }
             if (code == KeyEvent.VK_DOWN) {
-                dy = 3;
+                dy = 4;
             }
             if (code == KeyEvent.VK_RIGHT) {
-                dx = 3;
+                dx = 4;
             }
             if (code == KeyEvent.VK_LEFT) {
-                dx = -3;
+                dx = -4;
             }
         }
 

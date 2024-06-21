@@ -18,6 +18,7 @@ public class Phase extends JPanel implements ActionListener {
     private Timer timer;
     private List<Asteroid> asteroids;
     private boolean inGame;
+    private int asteroidsKill;
 
     // Tudo o que possui a Phase
     public Phase() {
@@ -37,11 +38,12 @@ public class Phase extends JPanel implements ActionListener {
         addKeyListener(new TecladoAdapter());
 
         asteroids = new ArrayList<>();
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 10; i++) {
             Asteroid asteroid = new Asteroid((int) (Math.random() * 1024), (int) (Math.random() * 728) - 728);
             asteroid.load();
             asteroids.add(asteroid);
         }
+
 
         timer = new Timer(5, this);
         timer.start();
@@ -71,6 +73,12 @@ public class Phase extends JPanel implements ActionListener {
             Toolkit.getDefaultToolkit().sync(); // Sincroniza a pintura para evitar o tearing
         } else {
             ImageIcon gameOver = new ImageIcon("res\\GameOver.png");
+            graficos.drawImage(gameOver.getImage(), 0, 0, null);
+            Toolkit.getDefaultToolkit().sync(); // Sincroniza a pintura para evitar o tearing
+        }
+
+        if (asteroidsKill == 60){
+            ImageIcon gameOver = new ImageIcon("res\\YouWin.jpeg");
             graficos.drawImage(gameOver.getImage(), 0, 0, null);
             Toolkit.getDefaultToolkit().sync(); // Sincroniza a pintura para evitar o tearing
         }
@@ -105,6 +113,22 @@ public class Phase extends JPanel implements ActionListener {
                     if(shapeShoot.intersects(shapeAsteroid)){
                         tempAsteroid.setVisible(false);
                         tempShoot.setVisible(false);
+                        asteroidsKill+= 1;
+                        if (asteroidsKill == 10){
+                            for (int i = 0; i < 20; i++) {
+                                Asteroid asteroid = new Asteroid((int) (Math.random() * 1024), (int) (Math.random() * 728) - 728);
+                                asteroid.load();
+                                asteroids.add(asteroid);
+                            }
+                        }
+
+                        if (asteroidsKill == 30){
+                            for (int i = 0; i < 30; i++) {
+                                Asteroid asteroid = new Asteroid((int) (Math.random() * 1024), (int) (Math.random() * 728) - 728);
+                                asteroid.load();
+                                asteroids.add(asteroid);
+                            }
+                        }
                         Sound.explosion.play();
                     }
                 }
