@@ -1,7 +1,27 @@
-# Javasapiens
-## Index
-1. [Description about the project](#description-about-the-project)
-## Description about the project
-This project is a game developed in Java, using JavaX for creating graphical elements. The theme of the game was chosen by the team and will be based on the game Asteroids. Therefore, it is necessary to create a game interface that contains a spaceship that responds to the left, right, up and down key controls for movement. In addition to the spaceship, there will be asteroids that descend from the screen, which are the objective of the game, as the spaceship can shoot projectiles. When a shot hits and destroys an asteroid, the player's score increases. However, if an asteroid collides with the spaceship, it explodes and the game ends.
+# Javasapiens - Space Fight
 
-There will also be an initial screen and a pause screen. The initial screen is where the menu is located to start a new game, and the pause screen, which can be accessed during the game and allows the player to pause the execution of the game.
+## Index
+1. [Description of the project](#description-of-the-project)
+2. [How to play](#how-to-play)
+3. [Requirements](#requirements)
+
+## Description of the project
+Welcome to Space Fight, a game where a spaceship is sent to save Earth from asteroids heading its way. Embark on a dangerous and thrilling mission that will test your skills.
+
+## How to play
+### Spaceship movement:
+- `↑`: moves the spaceship up
+- `↓`: moves the spaceship down
+- `→`: moves the spaceship right
+- `←`: moves the spaceship left
+- `Z`: shoots a projectile
+
+### Asteroids:
+The asteroids descend at different speeds, so be careful because if they collide with you, you will be destroyed!
+
+### How to win:
+After destroying all waves of asteroids, you will win the game.
+
+## Requirements
+- Java version: 21+
+- SDK: 22+
