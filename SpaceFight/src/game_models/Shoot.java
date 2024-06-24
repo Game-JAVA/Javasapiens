@@ -6,19 +6,33 @@ public class Shoot extends Character {
 
     private Image image;
 
+    private boolean isVisible;
+
     private static int VELOCIDADE = -4;
 
+    //Construtor do tiro
     public Shoot(int x, int y) {
         super(x, y);
+        isVisible = true;
     }
 
+    //Carrega a imagem e o tamanho dela
     public void load() {
         super.load("res\\shoot.png");
     }
 
+    //Movimentação do tiro
     public void move(){
         super.setY(getY() + VELOCIDADE);
+        if(getY() >  938){
+            isVisible = false;
+        }
     }
+
+    public Rectangle getBounds() {
+        return new Rectangle(getX(), getY(), getWidth(), getHeight());
+    }
+
 
     public static int getVELOCIDADE() {
         return VELOCIDADE;
@@ -28,5 +42,11 @@ public class Shoot extends Character {
         Shoot.VELOCIDADE = VELOCIDADE;
     }
 
+    public boolean isVisible() {
+        return isVisible;
+    }
 
+    public void setVisible(boolean visible) {
+        isVisible = visible;
+    }
 }

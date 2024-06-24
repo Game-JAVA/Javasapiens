@@ -8,6 +8,7 @@ import java.util.List;
 public class Spacecraft extends Character {
 
     private int dx, dy;
+    private boolean isVisible;
     private List<Shoot> shoots;
     private final int SCREEN_WIDTH = 1024;  // Largura da tela
     private final int SCREEN_HEIGHT = 728;  // Altura da tela
@@ -15,7 +16,7 @@ public class Spacecraft extends Character {
     //Pegando x e y do pai
     public Spacecraft(int x, int y) {
         super(x, y);
-
+        isVisible = true;
         shoots = new ArrayList<Shoot>();
     }
 
@@ -29,7 +30,7 @@ public class Spacecraft extends Character {
         return new Rectangle(getX() - 5, getY() + 20, getWidth(), getHeight());
     }
 
-    //Movimentação da nave
+    //Movimentação da espaçonave
     public void move() {
         int newX = getX() + dx;
         int newY = getY() + dy;
@@ -43,8 +44,9 @@ public class Spacecraft extends Character {
         }
     }
 
+    //Método do tiro da espaçonave
     public void singleShot() {
-        this.shoots.add(new Shoot(getX() + getWidth() - 150, getY() + getHeight() - 120));
+        this.shoots.add(new Shoot(getX() + getWidth() - 42, getY() + getHeight() - 54));
     }
 
         //Reconhecer quando a tecla está pressionada
@@ -53,18 +55,19 @@ public class Spacecraft extends Character {
 
             if (code == KeyEvent.VK_Z) {
                 singleShot();
+                Sound.soundShoot.play();
             }
             if (code == KeyEvent.VK_UP) {
-                dy = -3;
+                dy = -4;
             }
             if (code == KeyEvent.VK_DOWN) {
-                dy = 3;
+                dy = 4;
             }
             if (code == KeyEvent.VK_RIGHT) {
-                dx = 3;
+                dx = 4;
             }
             if (code == KeyEvent.VK_LEFT) {
-                dx = -3;
+                dx = -4;
             }
         }
 
@@ -87,5 +90,13 @@ public class Spacecraft extends Character {
         }
     public List<Shoot> getShoots() {
         return shoots;
+    }
+
+    public boolean isVisible() {
+        return isVisible;
+    }
+
+    public void setVisible(boolean visible) {
+        isVisible = visible;
     }
 }
