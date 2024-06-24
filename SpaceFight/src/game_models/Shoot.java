@@ -10,15 +10,18 @@ public class Shoot extends Character {
 
     private static int VELOCIDADE = -4;
 
+    //Construtor do tiro
     public Shoot(int x, int y) {
         super(x, y);
         isVisible = true;
     }
 
+    //Carrega a imagem e o tamanho dela
     public void load() {
         super.load("res\\shoot.png");
     }
 
+    //Movimentação do tiro
     public void move(){
         super.setY(getY() + VELOCIDADE);
         if(getY() >  938){

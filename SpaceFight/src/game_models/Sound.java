@@ -22,6 +22,7 @@ public class Sound {
         }
     }
 
+    //Método para começar o som
     public void play() {
         if (clip != null) {
             new Thread(() -> {
@@ -31,6 +32,7 @@ public class Sound {
         }
     }
 
+    //Método para deixar o som em loop
     public void loop() {
         if (clip != null) {
             new Thread(() -> {
@@ -40,6 +42,7 @@ public class Sound {
         }
     }
 
+    //Método para parar o som
     public void stop() {
         if (clip != null) {
             clip.stop();

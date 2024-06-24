@@ -30,7 +30,7 @@ public class Spacecraft extends Character {
         return new Rectangle(getX() - 5, getY() + 20, getWidth(), getHeight());
     }
 
-    //Movimentação da nave
+    //Movimentação da espaçonave
     public void move() {
         int newX = getX() + dx;
         int newY = getY() + dy;
@@ -44,6 +44,7 @@ public class Spacecraft extends Character {
         }
     }
 
+    //Método do tiro da espaçonave
     public void singleShot() {
         this.shoots.add(new Shoot(getX() + getWidth() - 42, getY() + getHeight() - 54));
     }
