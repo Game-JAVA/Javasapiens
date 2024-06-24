@@ -6,14 +6,21 @@
 3. [Requirements](#requirements)
 
 ## Description of the project
-Welcome to Space Fight, a game where a spaceship is sent to save Earth from asteroids heading its way. Embark on a dangerous and thrilling mission that will test your skills.
+Welcome to Space Fight, a game where a spacecraft is sent to save Earth from asteroids heading its way. Embark on a dangerous and thrilling mission that will test your skills.
+<p align="center">
+  <img src="SpaceFight/res/asteroid.gif">
+</p>
+<br>
+<p align="center">
+  <img src="SpaceFight/res/spacecraft.gif">
+</p>
 
 ## How to play
-### Spaceship movement:
-- `↑`: moves the spaceship up
-- `↓`: moves the spaceship down
-- `→`: moves the spaceship right
-- `←`: moves the spaceship left
+### Spacecraft movement:
+- `↑`: moves the spacecraft up
+- `↓`: moves the spacecraft down
+- `→`: moves the spacecraft right
+- `←`: moves the spacecraft left
 - `Z`: shoots a projectile
 
 ### Asteroids:
