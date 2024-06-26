@@ -49,45 +49,45 @@ public class Spacecraft extends Character {
         this.shoots.add(new Shoot(getX() + getWidth() - 42, getY() + getHeight() - 54));
     }
 
-        //Reconhecer quando a tecla está pressionada
-        public void keyPressed (KeyEvent tecla){
-            int code = tecla.getKeyCode();
+    //Reconhecer quando a tecla está pressionada
+    public void keyPressed (KeyEvent tecla){
+        int code = tecla.getKeyCode();
 
-            if (code == KeyEvent.VK_Z) {
-                singleShot();
-                Sound.soundShoot.play();
-            }
-            if (code == KeyEvent.VK_UP) {
-                dy = -4;
-            }
-            if (code == KeyEvent.VK_DOWN) {
-                dy = 4;
-            }
-            if (code == KeyEvent.VK_RIGHT) {
-                dx = 4;
-            }
-            if (code == KeyEvent.VK_LEFT) {
-                dx = -4;
-            }
+        if (code == KeyEvent.VK_Z) {
+            singleShot();
+            Sound.soundShoot.play();
         }
-
-        //Reconhecer quando a tecla não está pressionada
-        public void keyRelease (KeyEvent tecla){
-            int code = tecla.getKeyCode();
-
-            if (code == KeyEvent.VK_UP) {
-                dy = 0;
-            }
-            if (code == KeyEvent.VK_DOWN) {
-                dy = 0;
-            }
-            if (code == KeyEvent.VK_RIGHT) {
-                dx = 0;
-            }
-            if (code == KeyEvent.VK_LEFT) {
-                dx = 0;
-            }
+        if (code == KeyEvent.VK_UP) {
+            dy = -4;
         }
+        if (code == KeyEvent.VK_DOWN) {
+            dy = 4;
+        }
+        if (code == KeyEvent.VK_RIGHT) {
+            dx = 4;
+        }
+        if (code == KeyEvent.VK_LEFT) {
+            dx = -4;
+        }
+    }
+
+    //Reconhecer quando a tecla não está pressionada
+    public void keyRelease (KeyEvent tecla){
+        int code = tecla.getKeyCode();
+
+        if (code == KeyEvent.VK_UP) {
+            dy = 0;
+        }
+        if (code == KeyEvent.VK_DOWN) {
+            dy = 0;
+        }
+        if (code == KeyEvent.VK_RIGHT) {
+            dx = 0;
+        }
+        if (code == KeyEvent.VK_LEFT) {
+            dx = 0;
+        }
+    }
     public List<Shoot> getShoots() {
         return shoots;
     }

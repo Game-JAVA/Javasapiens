@@ -1,5 +1,6 @@
 package game_models;
 
+import game.Main;
 import game_models.Asteroid;
 import game_models.Spacecraft;
 
@@ -19,12 +20,19 @@ public class Phase extends JPanel implements ActionListener {
     private List<Asteroid> asteroids;
     private boolean inGame;
     private int asteroidsKill;
+<<<<<<< Updated upstream
+=======
+    private int score;
+    private Font gameFont;
+    private boolean isPaused;
+>>>>>>> Stashed changes
 
     // Tudo o que possui a Phase
     public Phase() {
         setFocusable(true);
         setDoubleBuffered(true);
 
+<<<<<<< Updated upstream
         //Criação da imagem de fundo
         ImageIcon reference = new ImageIcon("res\\background.gif");
         background = reference.getImage();
@@ -37,10 +45,46 @@ public class Phase extends JPanel implements ActionListener {
         //Som de fundo do jogo
         Sound.soundgame.loop();
 
+=======
+        // Carregar a fonte personalizada
+        try {
+            // Carrega a fonte a partir do arquivo
+            gameFont = Font.createFont(Font.TRUETYPE_FONT, new File("res/PressStart2P-Regular.ttf"));
+            // Define o tamanho padrão da fonte
+            gameFont = gameFont.deriveFont(Font.BOLD, 20f);
+            // Registra a fonte no sistema
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(gameFont);
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+            // Se houver um problema ao carregar a fonte, usa uma fonte padrão
+            gameFont = new Font("Helvetica", Font.BOLD, 20);
+        }
+
+        // Inicializa o estado do jogo
+        initGame();
+>>>>>>> Stashed changes
 
         addKeyListener(new TecladoAdapter());
 
-        //Criação de asteroids
+        timer = new Timer(5, this);
+        timer.start();
+    }
+
+    // Método para inicializar ou reinicializar o jogo
+    private void initGame() {
+        // Som de fundo do jogo
+        Sound.soundgame.loop();
+
+        // Criação da imagem de fundo
+        ImageIcon reference = new ImageIcon("res\\background.gif");
+        background = reference.getImage();
+
+        // Criação da espaçonave
+        spacecraft = new Spacecraft(470, 450);
+        spacecraft.load();
+
+        // Criação de asteroides
         asteroids = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             Asteroid asteroid = new Asteroid((int) (Math.random() * 1024), (int) (Math.random() * 728) - 728);
@@ -48,10 +92,10 @@ public class Phase extends JPanel implements ActionListener {
             asteroids.add(asteroid);
         }
 
-
-        timer = new Timer(5, this);
-        timer.start();
         inGame = true;
+        isPaused = false;
+        score = 0;
+        asteroidsKill = 0;
     }
 
     // Colocando gráfico no jogo
@@ -76,11 +120,34 @@ public class Phase extends JPanel implements ActionListener {
                 m.load();
                 graficos.drawImage(m.getImage(), m.getX(), m.getY(), this);
             }
+<<<<<<< Updated upstream
+=======
+
+            // Exibir mensagem de pausa
+            if (isPaused) {
+                graficos.setFont(gameFont.deriveFont(Font.BOLD, 40f));
+                graficos.setColor(Color.YELLOW);
+                graficos.drawString("PAUSED", 400, 330);
+
+                graficos.setFont(gameFont.deriveFont(Font.BOLD, 20f));
+                graficos.setColor(Color.YELLOW);
+                graficos.drawString("Press R to restart", 340, 370);
+            }
+
+>>>>>>> Stashed changes
             Toolkit.getDefaultToolkit().sync(); // Sincroniza a pintura para evitar o tearing
             } else {
                 ImageIcon gameOver = new ImageIcon("res\\GameOver.png");
                 graficos.drawImage(gameOver.getImage(), 0, 0, null);
                 Toolkit.getDefaultToolkit().sync(); // Sincroniza a pintura para evitar o tearing
+<<<<<<< Updated upstream
+=======
+                // Configura e desenha o texto com a fonte personalizada
+                graficos.setFont(gameFont.deriveFont(Font.BOLD, 50f)); // Tamanho maior para o texto de fim de jogo
+                graficos.setColor(Color.WHITE);
+                graficos.drawString("Score:" + score, 290, 450);
+
+>>>>>>> Stashed changes
             }
         //Fim de jogo
         if (asteroidsKill == 60){
@@ -148,6 +215,10 @@ public class Phase extends JPanel implements ActionListener {
     // Atualiza a localização dos objetos
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (isPaused || !inGame) {
+            return; // Se estiver pausado ou fora de jogo, não atualiza a lógica do jogo
+        }
+
         spacecraft.move();
         List<Shoot> shoots = spacecraft.getShoots();
         for (int i = 0; i < shoots.size(); i++){
@@ -172,12 +243,34 @@ public class Phase extends JPanel implements ActionListener {
         repaint();
     }
 
+    // Método para reiniciar o jogo
+    private void resetGame() {
+        initGame(); // Chama o método para reconfigurar o jogo
+        repaint();  // Re-pinta a tela para refletir as mudanças
+    }
+
+
     // Teclado pressionado
     private class TecladoAdapter extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
-            if (inGame)
+            int code = e.getKeyCode();
+
+            if (code == KeyEvent.VK_ESCAPE) { // Checa se a tecla "esc" foi pressionada
+                if (inGame) {
+                    isPaused = !isPaused;// Alterna o estado de pausa
+                }
+            }
+
+            if (code == KeyEvent.VK_R){
+                if (isPaused || !inGame){
+                    resetGame();
+                }
+            }
+
+            if (inGame && !isPaused) {
                 spacecraft.keyPressed(e);
+            }
         }
 
         // Teclado não pressionado
