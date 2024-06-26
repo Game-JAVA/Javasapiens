@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,32 +22,15 @@ public class Phase extends JPanel implements ActionListener {
     private List<Asteroid> asteroids;
     private boolean inGame;
     private int asteroidsKill;
-<<<<<<< Updated upstream
-=======
     private int score;
     private Font gameFont;
     private boolean isPaused;
->>>>>>> Stashed changes
 
     // Tudo o que possui a Phase
     public Phase() {
         setFocusable(true);
         setDoubleBuffered(true);
 
-<<<<<<< Updated upstream
-        //Criação da imagem de fundo
-        ImageIcon reference = new ImageIcon("res\\background.gif");
-        background = reference.getImage();
-
-        //Criação da espaçonave
-        spacecraft = new Spacecraft(360, 450);
-        spacecraft.load();
-
-
-        //Som de fundo do jogo
-        Sound.soundgame.loop();
-
-=======
         // Carregar a fonte personalizada
         try {
             // Carrega a fonte a partir do arquivo
@@ -63,7 +48,6 @@ public class Phase extends JPanel implements ActionListener {
 
         // Inicializa o estado do jogo
         initGame();
->>>>>>> Stashed changes
 
         addKeyListener(new TecladoAdapter());
 
@@ -107,6 +91,12 @@ public class Phase extends JPanel implements ActionListener {
         if (inGame == true) {
             graficos.drawImage(background, 0, 0, null);
             graficos.drawImage(spacecraft.getImage(), spacecraft.getX(), spacecraft.getY(), this);
+
+            // Configura e desenha o texto com a fonte personalizada
+            graficos.setFont(gameFont);
+            graficos.setColor(Color.WHITE);
+            graficos.drawString("Score:" + score, 10, 30);
+
             //Coloca imagem em todos os asteroids criados e os desenha na tela
             for (int j = 0; j < asteroids.size(); j++) {
                 Asteroid asteroid = asteroids.get(j);
@@ -120,8 +110,6 @@ public class Phase extends JPanel implements ActionListener {
                 m.load();
                 graficos.drawImage(m.getImage(), m.getX(), m.getY(), this);
             }
-<<<<<<< Updated upstream
-=======
 
             // Exibir mensagem de pausa
             if (isPaused) {
@@ -130,24 +118,21 @@ public class Phase extends JPanel implements ActionListener {
                 graficos.drawString("PAUSED", 400, 330);
 
                 graficos.setFont(gameFont.deriveFont(Font.BOLD, 20f));
-                graficos.setColor(Color.YELLOW);
+                graficos.setColor(Color.WHITE);
                 graficos.drawString("Press R to restart", 340, 370);
             }
 
->>>>>>> Stashed changes
             Toolkit.getDefaultToolkit().sync(); // Sincroniza a pintura para evitar o tearing
             } else {
                 ImageIcon gameOver = new ImageIcon("res\\GameOver.png");
                 graficos.drawImage(gameOver.getImage(), 0, 0, null);
                 Toolkit.getDefaultToolkit().sync(); // Sincroniza a pintura para evitar o tearing
-<<<<<<< Updated upstream
-=======
+
                 // Configura e desenha o texto com a fonte personalizada
                 graficos.setFont(gameFont.deriveFont(Font.BOLD, 50f)); // Tamanho maior para o texto de fim de jogo
                 graficos.setColor(Color.WHITE);
                 graficos.drawString("Score:" + score, 290, 450);
 
->>>>>>> Stashed changes
             }
         //Fim de jogo
         if (asteroidsKill == 60){
@@ -188,6 +173,7 @@ public class Phase extends JPanel implements ActionListener {
                     if(shapeShoot.intersects(shapeAsteroid)){
                         tempAsteroid.setVisible(false);
                         tempShoot.setVisible(false);
+                        score+= 50;
                         asteroidsKill+= 1;
                         if (asteroidsKill == 10){
                             for (int i = 0; i < 20; i++) {
