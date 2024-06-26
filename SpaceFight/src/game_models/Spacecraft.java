@@ -12,16 +12,16 @@ public class Spacecraft extends Character {
     private List<Shoot> shoots;
     private final int SCREEN_WIDTH = 1024;  // Largura da tela
     private final int SCREEN_HEIGHT = 728;  // Altura da tela
+    private long lastShotTime;
+    private final int SHOT_DELAY = 300;  // Intervalo mínimo entre os tiros em milissegundos
 
-    //Pegando x e y do pai
     public Spacecraft(int x, int y) {
         super(x, y);
         isVisible = true;
         shoots = new ArrayList<Shoot>();
+        lastShotTime = 0; // Inicializa com zero
     }
 
-
-    //Dando load no personagem spacecraft
     public void load() {
         super.load("res\\spacecraft.gif");
     }
@@ -30,12 +30,10 @@ public class Spacecraft extends Character {
         return new Rectangle(getX() - 5, getY() + 20, getWidth(), getHeight());
     }
 
-    //Movimentação da espaçonave
     public void move() {
         int newX = getX() + dx;
         int newY = getY() + dy;
 
-        // Verificar se a nova posição está dentro dos limites da tela
         if (newX >= 0 - (getWidth() * 0.38) && newX <= SCREEN_WIDTH - (getWidth() * 0.6)) {
             super.setX(newX);
         }
@@ -44,18 +42,21 @@ public class Spacecraft extends Character {
         }
     }
 
-    //Método do tiro da espaçonave
+    // Método do tiro da espaçonave com controle de delay
     public void singleShot() {
-        this.shoots.add(new Shoot(getX() + getWidth() - 42, getY() + getHeight() - 54));
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastShotTime >= SHOT_DELAY) {
+            this.shoots.add(new Shoot(getX() + getWidth() - 42, getY() + getHeight() - 54));
+            lastShotTime = currentTime;  // Atualiza o tempo do último tiro
+            Sound.soundShoot.play();
+        }
     }
 
-    //Reconhecer quando a tecla está pressionada
-    public void keyPressed (KeyEvent tecla){
+    public void keyPressed(KeyEvent tecla) {
         int code = tecla.getKeyCode();
 
         if (code == KeyEvent.VK_Z) {
             singleShot();
-            Sound.soundShoot.play();
         }
         if (code == KeyEvent.VK_UP) {
             dy = -4;
@@ -71,8 +72,7 @@ public class Spacecraft extends Character {
         }
     }
 
-    //Reconhecer quando a tecla não está pressionada
-    public void keyRelease (KeyEvent tecla){
+    public void keyRelease(KeyEvent tecla) {
         int code = tecla.getKeyCode();
 
         if (code == KeyEvent.VK_UP) {
@@ -88,6 +88,7 @@ public class Spacecraft extends Character {
             dx = 0;
         }
     }
+
     public List<Shoot> getShoots() {
         return shoots;
     }
