@@ -94,7 +94,6 @@ public class Phase extends JPanel implements ActionListener {
 
             // Configura e desenha o texto com a fonte personalizada
             graficos.setFont(gameFont);
-            graficos.setColor(Color.WHITE);
             graficos.drawString("Score:" + score, 10, 30);
 
             //Coloca imagem em todos os asteroids criados e os desenha na tela
