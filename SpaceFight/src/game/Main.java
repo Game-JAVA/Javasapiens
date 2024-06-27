@@ -1,6 +1,6 @@
 package game;
 
-import game_models.Home;
+import game_models.Screen;
 
 import javax.swing.*;
 
@@ -15,8 +15,8 @@ public class Main extends JFrame {
         ImageIcon icon = new ImageIcon("res\\spacecraftIcon.jpg");
         setIconImage(icon.getImage());
 
-        // Cria o painel inicial (Home) e adiciona à janela principal
-        Home homePanel = new Home(this);
+        // Cria o painel inicial (Screen) e adiciona à janela principal
+        Screen homePanel = new Screen(this);
         getContentPane().add(homePanel);
 
         setVisible(true);

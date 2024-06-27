@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
-public class Home extends JPanel implements ActionListener {
+public class Screen extends JPanel implements ActionListener {
     private JButton startButton;
     private JButton aboutButton;
     private JButton exitButton;
@@ -18,7 +18,7 @@ public class Home extends JPanel implements ActionListener {
     private Image background;
     private Font gameFont;
 
-    public Home(Main main) {
+    public Screen(Main main) {
         this.main = main;
         setLayout(null); // Usaremos layout absoluto para posicionar os componentes manualmente
 
@@ -98,12 +98,14 @@ public class Home extends JPanel implements ActionListener {
         // Desenha o fundo ou qualquer outra arte do menu inicial, se necessário
         ImageIcon screenHome = new ImageIcon("res\\telainicio.png");
         g.drawImage(screenHome.getImage(), 0, 0, null);
+
     }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == startButton) {
-            // Remove o painel atual (Home) da janela principal
+            // Remove o painel atual (Screen) da janela principal
             main.getContentPane().remove(this);
 
             // Adiciona a fase do jogo à janela principal
@@ -120,9 +122,25 @@ public class Home extends JPanel implements ActionListener {
             // Inicia a lógica de jogo, se necessário
             // Exemplo: phase.initGame(); // Certifique-se de chamar o método de inicialização da fase aqui, se necessário
         } else if (e.getSource() == aboutButton) {
-            // Lógica para o botão "SOBRE"
+            // Remove o painel atual (Screen) da janela principal
+            main.getContentPane().remove(this);
+
+            // Cria um JLabel para exibir a imagem
+            ImageIcon aboutImage = new ImageIcon("res\\GameOver.png");
+            JLabel imageLabel = new JLabel(aboutImage);
+            imageLabel.setBounds(0, 0, aboutImage.getIconWidth(), aboutImage.getIconHeight());
+
+            // Adiciona o JLabel com a imagem à janela principal
+            main.getContentPane().add(imageLabel);
+
+            // Revalida e redesenha a janela principal
+            main.revalidate();
+            main.repaint();
         } else if (e.getSource() == exitButton) {
             // Lógica para o botão "SAIR"
+            System.exit(0);
+
         }
     }
+
 }
