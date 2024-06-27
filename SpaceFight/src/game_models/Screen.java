@@ -92,9 +92,9 @@ public class Screen extends JPanel implements ActionListener {
         main.getContentPane().removeAll();
 
         // Cria um JLabel para exibir a imagem
-        ImageIcon aboutImage = new ImageIcon("res/AboutScreen.png");
+        ImageIcon aboutImage = new ImageIcon("res/tela_aboutscreen.png");
         JLabel imageLabel = new JLabel(aboutImage);
-        backButton.setBounds(400, 460, 200, 50);
+        backButton.setBounds(790, 500, 200, 50);
 
         imageLabel.setBounds(0, 0, aboutImage.getIconWidth(), aboutImage.getIconHeight());
 
