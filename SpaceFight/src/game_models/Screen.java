@@ -14,133 +14,136 @@ public class Screen extends JPanel implements ActionListener {
     private JButton startButton;
     private JButton aboutButton;
     private JButton exitButton;
+    private JButton backButton;
     private Main main;
-    private Image background;
     private Font gameFont;
 
     public Screen(Main main) {
         this.main = main;
-        setLayout(null); // Usaremos layout absoluto para posicionar os componentes manualmente
+        setLayout(null); // Usamos layout absoluto para posicionar os componentes manualmente
 
+        loadFont(); // Carrega a fonte personalizada
+
+        // Inicializa e adiciona os botões ao painel
+        startButton = createButton("JOGAR", 400, 400, 200, 50);
+        aboutButton = createButton("SOBRE", 400, 460, 200, 50);
+        exitButton = createButton("SAIR", 400, 520, 200, 50);
+
+        // Adiciona os botões ao painel
+        add(startButton);
+        add(aboutButton);
+        add(exitButton);
+
+        // Inicializa o botão "BACK"
+        backButton = createButton("BACK", 0, 0, 200, 50); // Posição inicial arbitrária
+        backButton.addActionListener(this);
+    }
+
+    private void loadFont() {
         try {
-            // Carrega a fonte a partir do arquivo
-            gameFont = Font.createFont(Font.TRUETYPE_FONT, new File("res/PressStart2P-Regular.ttf"));
-            // Define o tamanho padrão da fonte
-            gameFont = gameFont.deriveFont(Font.BOLD, 20f);
-            // Registra a fonte no sistema
-            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            ge.registerFont(gameFont);
+            gameFont = Font.createFont(Font.TRUETYPE_FONT, new File("res/PressStart2P-Regular.ttf")).deriveFont(Font.BOLD, 20f);
+            GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(gameFont);
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
-            // Se houver um problema ao carregar a fonte, usa uma fonte padrão
             gameFont = new Font("Helvetica", Font.BOLD, 20);
         }
+    }
 
-        // Definição da UI personalizada para os botões
-        class CustomButtonUI extends BasicButtonUI {
-            @Override
-            public void installDefaults(AbstractButton b) {
-                super.installDefaults(b);
-                b.setBackground(Color.YELLOW);
-                b.setContentAreaFilled(false);
-                b.setFocusPainted(false);
-                b.setBorderPainted(false);
-            }
-
-            @Override
-            public void paint(Graphics g, JComponent c) {
-                AbstractButton b = (AbstractButton) c;
-                ButtonModel model = b.getModel();
-
-                if (model.isPressed()) {
-                    g.setColor(b.getBackground());
-                } else {
-                    g.setColor(b.getBackground());
-                }
-
-                g.fillRect(0, 0, c.getWidth(), c.getHeight());
-                super.paint(g, c);
-            }
-        }
-
-        // Botão de iniciar jogo
-        startButton = new JButton("JOGAR");
-        startButton.setFont(gameFont);
-        startButton.setBounds(400, 400, 200, 50); // Posição e tamanho do botão
-        startButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        startButton.setUI(new CustomButtonUI()); // Aplica a UI personalizada
-        startButton.addActionListener(this); // Adiciona o listener de ação ao botão
-        add(startButton); // Adiciona o botão ao painel
-
-        // Botão sobre
-        aboutButton = new JButton("SOBRE");
-        aboutButton.setFont(gameFont);
-        aboutButton.setBounds(400, 460, 200, 50); // Posição e tamanho do botão
-        aboutButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        aboutButton.setUI(new CustomButtonUI()); // Aplica a UI personalizada
-        aboutButton.addActionListener(this); // Adiciona o listener de ação ao botão
-        add(aboutButton); // Adiciona o botão ao painel
-
-        // Botão sair
-        exitButton = new JButton("SAIR");
-        exitButton.setFont(gameFont);
-        exitButton.setBounds(400, 520, 200, 50); // Posição e tamanho do botão
-        exitButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        exitButton.setUI(new CustomButtonUI()); // Aplica a UI personalizada
-        exitButton.addActionListener(this); // Adiciona o listener de ação ao botão
-        add(exitButton); // Adiciona o botão ao painel
+    private JButton createButton(String text, int x, int y, int width, int height) {
+        JButton button = new JButton(text);
+        button.setFont(gameFont);
+        button.setBounds(x, y, width, height);
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        button.setUI(new CustomButtonUI());
+        button.addActionListener(this);
+        return button;
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
-        // Desenha o fundo ou qualquer outra arte do menu inicial, se necessário
-        ImageIcon screenHome = new ImageIcon("res\\telainicio.png");
+        ImageIcon screenHome = new ImageIcon("res/telainicio.png");
         g.drawImage(screenHome.getImage(), 0, 0, null);
-
     }
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == startButton) {
-            // Remove o painel atual (Screen) da janela principal
-            main.getContentPane().remove(this);
-
-            // Adiciona a fase do jogo à janela principal
-            Phase phase = new Phase();
-            main.getContentPane().add(phase);
-
-            // Revalida e redesenha a janela principal
-            main.revalidate();
-            main.repaint();
-
-            // Solicita o foco de entrada para a fase do jogo
-            phase.requestFocusInWindow();
-
-            // Inicia a lógica de jogo, se necessário
-            // Exemplo: phase.initGame(); // Certifique-se de chamar o método de inicialização da fase aqui, se necessário
+            showGamePhase();
         } else if (e.getSource() == aboutButton) {
-            // Remove o painel atual (Screen) da janela principal
-            main.getContentPane().remove(this);
-
-            // Cria um JLabel para exibir a imagem
-            ImageIcon aboutImage = new ImageIcon("res\\GameOver.png");
-            JLabel imageLabel = new JLabel(aboutImage);
-            imageLabel.setBounds(0, 0, aboutImage.getIconWidth(), aboutImage.getIconHeight());
-
-            // Adiciona o JLabel com a imagem à janela principal
-            main.getContentPane().add(imageLabel);
-
-            // Revalida e redesenha a janela principal
-            main.revalidate();
-            main.repaint();
+            showAboutScreen();
         } else if (e.getSource() == exitButton) {
-            // Lógica para o botão "SAIR"
             System.exit(0);
-
+        } else if (e.getSource() == backButton) {
+            showHomeScreen();
         }
     }
 
+    private void showGamePhase() {
+        main.getContentPane().removeAll();
+        Phase phase = new Phase();
+        main.getContentPane().add(phase);
+        main.revalidate();
+        main.repaint();
+        phase.requestFocusInWindow();
+    }
+
+    private void showAboutScreen() {
+        main.getContentPane().removeAll();
+
+        // Cria um JLabel para exibir a imagem
+        ImageIcon aboutImage = new ImageIcon("res/AboutScreen.png");
+        JLabel imageLabel = new JLabel(aboutImage);
+        backButton.setBounds(400, 460, 200, 50);
+
+        imageLabel.setBounds(0, 0, aboutImage.getIconWidth(), aboutImage.getIconHeight());
+
+        // Cria um novo painel para a tela "Sobre"
+        JPanel aboutPanel = new JPanel(null);
+        aboutPanel.add(backButton);
+        aboutPanel.add(imageLabel);
+
+        // Ajusta a posição do botão "BACK" e o adiciona ao painel "Sobre"
+
+        // Adiciona o painel "Sobre" à janela principal
+        main.getContentPane().add(aboutPanel);
+
+        // Revalida e redesenha a janela principal
+        main.revalidate();
+        main.repaint();
+    }
+
+    private void showHomeScreen() {
+        main.getContentPane().removeAll();
+        main.getContentPane().add(new Screen(main));
+        main.revalidate();
+        main.repaint();
+    }
+
+    // Classe interna para definir a UI personalizada dos botões
+    private class CustomButtonUI extends BasicButtonUI {
+        @Override
+        public void installDefaults(AbstractButton b) {
+            super.installDefaults(b);
+            b.setBackground(Color.YELLOW);
+            b.setContentAreaFilled(false);
+            b.setFocusPainted(false);
+            b.setBorderPainted(false);
+        }
+
+        @Override
+        public void paint(Graphics g, JComponent c) {
+            AbstractButton b = (AbstractButton) c;
+            ButtonModel model = b.getModel();
+
+            if (model.isPressed()) {
+                g.setColor(b.getBackground());
+            } else {
+                g.setColor(b.getBackground());
+            }
+
+            g.fillRect(0, 0, c.getWidth(), c.getHeight());
+            super.paint(g, c);
+        }
+    }
 }
