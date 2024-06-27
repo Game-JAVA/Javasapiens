@@ -1,22 +1,28 @@
 package game;
 
-import game_models.Phase;
+import game_models.Home;
 
 import javax.swing.*;
 
 public class Main extends JFrame {
-    //Criação da janela do jogo
-    public Main(){
-        add(new Phase());
+
+    public Main() {
         setTitle("Space Fight");
-        setSize(1024,728);
+        setSize(1024, 728);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        this.setResizable(false);
+        setResizable(false);
+        ImageIcon icon = new ImageIcon("res\\spacecraftIcon.jpg");
+        setIconImage(icon.getImage());
+
+        // Cria o painel inicial (Home) e adiciona à janela principal
+        Home homePanel = new Home(this);
+        getContentPane().add(homePanel);
+
         setVisible(true);
     }
 
-    public static void main (String []args){
+    public static void main(String[] args) {
         new Main();
     }
 }
