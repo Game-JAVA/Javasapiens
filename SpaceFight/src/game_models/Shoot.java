@@ -29,6 +29,7 @@ public class Shoot extends Character {
         }
     }
 
+    // Cria um retangulo para ser checado a colisão
     public Rectangle getBounds() {
         return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
