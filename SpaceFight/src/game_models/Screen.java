@@ -24,7 +24,7 @@ public class Screen extends JPanel implements ActionListener {
 
         loadFont(); // Carrega a fonte personalizada
 
-        // Inicializa e adiciona os botões ao painel
+        // Criação e posicionamento dos botões
         startButton = createButton("JOGAR", 400, 400, 200, 50);
         aboutButton = createButton("SOBRE", 400, 460, 200, 50);
         exitButton = createButton("SAIR", 400, 520, 200, 50);
@@ -39,85 +39,91 @@ public class Screen extends JPanel implements ActionListener {
         backButton.addActionListener(this);
     }
 
+    // Método para carregar a fonte personalizada
     private void loadFont() {
         try {
+            // Tenta carregar a fonte personalizada do arquivo
             gameFont = Font.createFont(Font.TRUETYPE_FONT, new File("res/PressStart2P-Regular.ttf")).deriveFont(Font.BOLD, 20f);
             GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(gameFont);
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
+            // Se houver falha, define uma fonte padrão
             gameFont = new Font("Helvetica", Font.BOLD, 20);
         }
     }
 
+    // Método para criar um botão com texto, posição e tamanho especificados
     private JButton createButton(String text, int x, int y, int width, int height) {
         JButton button = new JButton(text);
-        button.setFont(gameFont);
-        button.setBounds(x, y, width, height);
-        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        button.setUI(new CustomButtonUI());
-        button.addActionListener(this);
+        button.setFont(gameFont); // Define a fonte personalizada no botão
+        button.setBounds(x, y, width, height); // Define posição e tamanho
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Define o cursor para o botão
+        button.setUI(new CustomButtonUI()); // Define a UI personalizada
+        button.addActionListener(this); // Adiciona ActionListener ao botão
         return button;
     }
 
+    // Método para desenhar o componente gráfico
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        // Desenha a imagem de fundo
         ImageIcon screenHome = new ImageIcon("res/telainicio.png");
         g.drawImage(screenHome.getImage(), 0, 0, null);
     }
 
+    // Método para tratar eventos de ação dos botões
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == startButton) {
-            showGamePhase();
+            showGamePhase(); // Mostra a fase do jogo
         } else if (e.getSource() == aboutButton) {
-            showAboutScreen();
+            showAboutScreen(); // Mostra a tela "Sobre"
         } else if (e.getSource() == exitButton) {
-            System.exit(0);
+            System.exit(0); // Sai do jogo
         } else if (e.getSource() == backButton) {
-            showHomeScreen();
+            showHomeScreen(); // Volta para a tela inicial
         }
     }
 
+    // Método para mostrar a fase do jogo
     private void showGamePhase() {
-        main.getContentPane().removeAll();
-        Phase phase = new Phase();
-        main.getContentPane().add(phase);
+        main.getContentPane().removeAll(); // Remove todos os componentes da tela principal
+        Phase phase = new Phase(); // Cria um novo painel da fase
+        main.getContentPane().add(phase); // Adiciona a fase à tela principal
         main.revalidate();
         main.repaint();
-        phase.requestFocusInWindow();
+        phase.requestFocusInWindow(); // Define o foco na nova fase
     }
 
+    // Método para mostrar a tela "Sobre"
     private void showAboutScreen() {
-        main.getContentPane().removeAll();
+        main.getContentPane().removeAll(); // Remove todos os componentes da tela principal
 
         // Cria um JLabel para exibir a imagem
         ImageIcon aboutImage = new ImageIcon("res/tela_aboutscreen.png");
         JLabel imageLabel = new JLabel(aboutImage);
-        backButton.setBounds(790, 500, 200, 50);
+        backButton.setBounds(790, 500, 200, 50); // Define a posição do botão "BACK"
 
-        imageLabel.setBounds(0, 0, aboutImage.getIconWidth(), aboutImage.getIconHeight());
+        imageLabel.setBounds(0, 0, aboutImage.getIconWidth(), aboutImage.getIconHeight()); // Define a posição da imagem
 
         // Cria um novo painel para a tela "Sobre"
         JPanel aboutPanel = new JPanel(null);
-        aboutPanel.add(backButton);
-        aboutPanel.add(imageLabel);
+        aboutPanel.add(backButton); // Adiciona o botão "BACK" ao painel "Sobre"
+        aboutPanel.add(imageLabel); // Adiciona a imagem ao painel "Sobre"
 
-        // Ajusta a posição do botão "BACK" e o adiciona ao painel "Sobre"
+        main.getContentPane().add(aboutPanel); // Adiciona o painel "Sobre" à janela principal
 
-        // Adiciona o painel "Sobre" à janela principal
-        main.getContentPane().add(aboutPanel);
-
-        // Revalida e redesenha a janela principal
         main.revalidate();
-        main.repaint();
+        main.repaint(); // Revalida e redesenha a janela principal
     }
 
+    // Método para mostrar a tela inicial
     private void showHomeScreen() {
-        main.getContentPane().removeAll();
-        main.getContentPane().add(new Screen(main));
+        main.getContentPane().removeAll(); // Remove todos os componentes da tela principal
+        main.getContentPane().add(new Screen(main)); // Adiciona uma nova instância da tela inicial
         main.revalidate();
-        main.repaint();
+        main.repaint(); // Revalida e redesenha a janela principal
     }
 
     // Classe interna para definir a UI personalizada dos botões
@@ -125,10 +131,10 @@ public class Screen extends JPanel implements ActionListener {
         @Override
         public void installDefaults(AbstractButton b) {
             super.installDefaults(b);
-            b.setBackground(Color.YELLOW);
-            b.setContentAreaFilled(false);
-            b.setFocusPainted(false);
-            b.setBorderPainted(false);
+            b.setBackground(Color.YELLOW); // Define a cor de fundo do botão
+            b.setContentAreaFilled(false); // Desativa a pintura da área de conteúdo
+            b.setFocusPainted(false); // Desativa a pintura do foco
+            b.setBorderPainted(false); // Desativa a pintura da borda
         }
 
         @Override
@@ -137,12 +143,12 @@ public class Screen extends JPanel implements ActionListener {
             ButtonModel model = b.getModel();
 
             if (model.isPressed()) {
-                g.setColor(b.getBackground());
+                g.setColor(b.getBackground()); // Pinta o botão quando pressionado
             } else {
-                g.setColor(b.getBackground());
+                g.setColor(b.getBackground()); // Pinta o botão normalmente
             }
 
-            g.fillRect(0, 0, c.getWidth(), c.getHeight());
+            g.fillRect(0, 0, c.getWidth(), c.getHeight()); // Preenche o retângulo do botão
             super.paint(g, c);
         }
     }
