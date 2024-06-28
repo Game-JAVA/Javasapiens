@@ -16,12 +16,14 @@ Welcome to Space Fight, a game where a spacecraft is sent to save Earth from ast
 </p>
 
 ## How to play
-### Spacecraft movement:
+### Game controls:
 - `↑`: moves the spacecraft up
 - `↓`: moves the spacecraft down
 - `→`: moves the spacecraft right
 - `←`: moves the spacecraft left
 - `Z`: shoots a projectile
+- `R`: reset the game
+- `ESC`: pause the game
 
 ### Asteroids:
 The asteroids descend at different speeds, so be careful because if they collide with you, you will be destroyed!

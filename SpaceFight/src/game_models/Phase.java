@@ -49,6 +49,7 @@ public class Phase extends JPanel implements ActionListener {
         // Inicializa o estado do jogo
         initGame();
 
+        // Inicializa o teclado
         addKeyListener(new TecladoAdapter());
 
         timer = new Timer(5, this);
@@ -66,13 +67,13 @@ public class Phase extends JPanel implements ActionListener {
 
         // Criação da espaçonave
         spacecraft = new Spacecraft(470, 450);
-        spacecraft.load();
+        spacecraft.load();// Imagem e tamanho da espaçonave
 
         // Criação de asteroides
         asteroids = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             Asteroid asteroid = new Asteroid((int) (Math.random() * 1024), (int) (Math.random() * 728) - 728);
-            asteroid.load();
+            asteroid.load();// Imagem e tamanho do asteroid
             asteroids.add(asteroid);
         }
 
@@ -149,6 +150,7 @@ public class Phase extends JPanel implements ActionListener {
         Rectangle shapeShoot;
         Rectangle shapeAsteroid;
 
+        // Criar forma para a colisão
         for(int i = 0; i < asteroids.size(); i++){
             Asteroid tempAsteroid = asteroids.get(i);
             shapeAsteroid = tempAsteroid.getBounds();
@@ -162,6 +164,7 @@ public class Phase extends JPanel implements ActionListener {
             }
         }
         List<Shoot> shoots = spacecraft.getShoots();
+        // Criar forma para a colisão
         for (int j = 0; j < shoots.size(); j++){
             Shoot tempShoot = shoots.get(j);
             shapeShoot = tempShoot.getBounds();
@@ -175,6 +178,7 @@ public class Phase extends JPanel implements ActionListener {
                         tempShoot.setVisible(false);
                         score+= 50;
                         asteroidsKill+= 1;
+                        // Fase 2
                         if (asteroidsKill == 10){
                             for (int i = 0; i < 20; i++) {
                                 Asteroid asteroid = new Asteroid((int) (Math.random() * 1024), (int) (Math.random() * 728) - 728);
@@ -182,7 +186,7 @@ public class Phase extends JPanel implements ActionListener {
                                 asteroids.add(asteroid);
                             }
                         }
-
+                        // Fase 3
                         if (asteroidsKill == 30){
                             for (int i = 0; i < 30; i++) {
                                 Asteroid asteroid = new Asteroid((int) (Math.random() * 1024), (int) (Math.random() * 728) - 728);
@@ -205,8 +209,10 @@ public class Phase extends JPanel implements ActionListener {
             return; // Se estiver pausado ou fora de jogo, não atualiza a lógica do jogo
         }
 
+        // Realiza o movimento da espaçonave
         spacecraft.move();
         List<Shoot> shoots = spacecraft.getShoots();
+        // Realiza o movimento do tiro se estiver visivel, se não o remove
         for (int i = 0; i < shoots.size(); i++){
             Shoot m = shoots.get(i);
             if(m.isVisible()){
@@ -216,6 +222,7 @@ public class Phase extends JPanel implements ActionListener {
                 shoots.remove(i);
             }
         }
+        // Realiza o movimento do asteroid se estiver visivel, se não o remove
         for (int j = 0; j < asteroids.size(); j++){
             Asteroid asteroid = asteroids.get(j);
             if(asteroid.isVisible()){
@@ -225,7 +232,9 @@ public class Phase extends JPanel implements ActionListener {
                 asteroids.remove(j);
             }
         }
+        // Realiza a consulta se houve colisão
         checkCollisions();
+        // Atualiza as imagens
         repaint();
     }
 
@@ -249,11 +258,12 @@ public class Phase extends JPanel implements ActionListener {
             }
 
             if (code == KeyEvent.VK_R){
-                if (isPaused || !inGame){
+                if (isPaused || !inGame){ // Checa se o jogo está pausado ou se o jogo acabou
                     resetGame();
                 }
             }
 
+            // Checa se está em jogo e não está pausado, para realizar a movimentação da espaçonave
             if (inGame && !isPaused) {
                 spacecraft.keyPressed(e);
             }

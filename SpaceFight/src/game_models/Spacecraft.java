@@ -15,6 +15,7 @@ public class Spacecraft extends Character {
     private long lastShotTime;
     private final int SHOT_DELAY = 300;  // Intervalo mínimo entre os tiros em milissegundos
 
+    // Construtor da espaçonave, que coloca a posição que será gerado, coloca a espaçonave visivel, cria um array list de tiros e coloca a variavel lastShotTime com 0
     public Spacecraft(int x, int y) {
         super(x, y);
         isVisible = true;
@@ -22,14 +23,17 @@ public class Spacecraft extends Character {
         lastShotTime = 0; // Inicializa com zero
     }
 
+    // Carrega a imagem e o tamanho da espaçonave
     public void load() {
         super.load("res\\spacecraft.gif");
     }
 
+    // Cria um retangulo para ser checado a colisão
     public Rectangle getBounds() {
         return new Rectangle(getX() - 5, getY() + 20, getWidth(), getHeight());
     }
 
+    // Movimentação da espaçonave e colisão com as bordas da tela
     public void move() {
         int newX = getX() + dx;
         int newY = getY() + dy;
@@ -52,6 +56,7 @@ public class Spacecraft extends Character {
         }
     }
 
+    // Teclas da espaçonave e sua velocidade de movimento
     public void keyPressed(KeyEvent tecla) {
         int code = tecla.getKeyCode();
 
@@ -72,6 +77,7 @@ public class Spacecraft extends Character {
         }
     }
 
+    // Teclas não pressionadas
     public void keyRelease(KeyEvent tecla) {
         int code = tecla.getKeyCode();
 
