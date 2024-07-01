@@ -130,9 +130,13 @@ public class Phase extends JPanel implements ActionListener {
                 Toolkit.getDefaultToolkit().sync(); // Sincroniza a pintura para evitar o tearing
 
                 // Configura e desenha o texto com a fonte personalizada
-                graficos.setFont(gameFont.deriveFont(Font.BOLD, 50f)); // Tamanho maior para o texto de fim de jogo
+                graficos.setFont(gameFont.deriveFont(Font.BOLD, 40f)); // Tamanho maior para o texto de fim de jogo
                 graficos.setColor(Color.WHITE);
-                graficos.drawString("Score:" + score, 290, 450);
+                graficos.drawString("Score:" + score, 340, 435);
+
+                graficos.setFont(gameFont.deriveFont(Font.BOLD, 20f));
+                graficos.setColor(Color.WHITE);
+                graficos.drawString("Press R to restart", 340, 470);
 
             }
         //Fim de jogo
@@ -141,6 +145,10 @@ public class Phase extends JPanel implements ActionListener {
             ImageIcon youWin = new ImageIcon("res\\YouWin.jpeg");
             graficos.drawImage(youWin.getImage(), 0, 0, null);
             Toolkit.getDefaultToolkit().sync(); // Sincroniza a pintura para evitar o tearing
+
+            graficos.setFont(gameFont.deriveFont(Font.BOLD, 20f));
+            graficos.setColor(Color.WHITE);
+            graficos.drawString("Press R to restart", 325, 485);
         }
         g.dispose();
     }
