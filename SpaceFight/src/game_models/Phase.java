@@ -136,7 +136,7 @@ public class Phase extends JPanel implements ActionListener {
 
             }
         //Fim de jogo
-        if (asteroidsKill == 60){
+        if (asteroidsKill == 150){
             inGame = false;
             ImageIcon youWin = new ImageIcon("res\\YouWin.jpeg");
             graficos.drawImage(youWin.getImage(), 0, 0, null);
@@ -189,6 +189,22 @@ public class Phase extends JPanel implements ActionListener {
                         // Fase 3
                         if (asteroidsKill == 30){
                             for (int i = 0; i < 30; i++) {
+                                Asteroid asteroid = new Asteroid((int) (Math.random() * 1024), (int) (Math.random() * 728) - 728);
+                                asteroid.load();
+                                asteroids.add(asteroid);
+                            }
+                        }
+                        // Fase 4
+                        if (asteroidsKill == 60){
+                            for (int i = 0; i < 40; i++) {
+                                Asteroid asteroid = new Asteroid((int) (Math.random() * 1024), (int) (Math.random() * 728) - 728);
+                                asteroid.load();
+                                asteroids.add(asteroid);
+                            }
+                        }
+                        // Fase 5
+                        if (asteroidsKill == 100){
+                            for (int i = 0; i < 50; i++) {
                                 Asteroid asteroid = new Asteroid((int) (Math.random() * 1024), (int) (Math.random() * 728) - 728);
                                 asteroid.load();
                                 asteroids.add(asteroid);
