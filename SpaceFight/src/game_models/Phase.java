@@ -19,7 +19,6 @@ public class Phase extends JPanel implements ActionListener {
     private Image background;
     private Spacecraft spacecraft;
     private Timer timer;
-    private Timer rtimer;
     private List<Asteroid> asteroids;
     private boolean inGame;
     private int asteroidsKill;
@@ -28,7 +27,8 @@ public class Phase extends JPanel implements ActionListener {
     private boolean isPaused;
     private boolean showRoundText = false;
     private long roundTextStartTime;
-    private final int roundTextDuration = 2000; // duração em milissegundos (2 segundos)
+    private final int roundTextDuration = 1300; // duração em milissegundos (2 segundos)
+    private int currentRound = 1;
 
     public Phase() {
         setFocusable(true);
@@ -61,11 +61,7 @@ public class Phase extends JPanel implements ActionListener {
         spacecraft.load();
 
         asteroids = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            Asteroid asteroid = new Asteroid((int) (Math.random() * 1024), (int) (Math.random() * 728) - 728);
-            asteroid.load();
-            asteroids.add(asteroid);
-        }
+        addAsteroidsForRound(currentRound);
 
         inGame = true;
         isPaused = false;
@@ -73,11 +69,34 @@ public class Phase extends JPanel implements ActionListener {
         asteroidsKill = 0;
 
         // Inicia o timer para mostrar o texto do round
-        if (asteroidsKill == 0) {
-            showRoundText = true;
-            roundTextStartTime = System.currentTimeMillis();
-            rtimer = new Timer(50, this);
-            rtimer.start();
+        showRoundText = true;
+        roundTextStartTime = System.currentTimeMillis();
+    }
+
+    private void addAsteroidsForRound(int round) {
+        int numAsteroids = 0;
+        switch (round) {
+            case 1:
+                numAsteroids = 10;
+                break;
+            case 2:
+                numAsteroids = 20;
+                break;
+            case 3:
+                numAsteroids = 30;
+                break;
+            case 4:
+                numAsteroids = 40;
+                break;
+            case 5:
+                numAsteroids = 50;
+                break;
+        }
+
+        for (int i = 0; i < numAsteroids; i++) {
+            Asteroid asteroid = new Asteroid((int) (Math.random() * 1024), (int) (Math.random() * 728) - 728);
+            asteroid.load();
+            asteroids.add(asteroid);
         }
     }
 
@@ -120,7 +139,7 @@ public class Phase extends JPanel implements ActionListener {
             if (showRoundText) {
                 graficos.setFont(gameFont.deriveFont(Font.BOLD, 20f));
                 graficos.setColor(Color.WHITE);
-                graficos.drawString("Round 1", 440, 364);
+                graficos.drawString("Round " + currentRound, 440, 364);
             }
 
             Toolkit.getDefaultToolkit().sync();
@@ -182,36 +201,11 @@ public class Phase extends JPanel implements ActionListener {
                         score += 50;
                         asteroidsKill += 1;
 
-                        if (asteroidsKill == 10) {
-                            for (int i = 0; i < 20; i++) {
-                                Asteroid asteroid = new Asteroid((int) (Math.random() * 1024), (int) (Math.random() * 728) - 728);
-                                asteroid.load();
-                                asteroids.add(asteroid);
-                            }
-                        }
-
-                        if (asteroidsKill == 30) {
-                            for (int i = 0; i < 30; i++) {
-                                Asteroid asteroid = new Asteroid((int) (Math.random() * 1024), (int) (Math.random() * 728) - 728);
-                                asteroid.load();
-                                asteroids.add(asteroid);
-                            }
-                        }
-
-                        if (asteroidsKill == 60) {
-                            for (int i = 0; i < 40; i++) {
-                                Asteroid asteroid = new Asteroid((int) (Math.random() * 1024), (int) (Math.random() * 728) - 728);
-                                asteroid.load();
-                                asteroids.add(asteroid);
-                            }
-                        }
-
-                        if (asteroidsKill == 100) {
-                            for (int i = 0; i < 50; i++) {
-                                Asteroid asteroid = new Asteroid((int) (Math.random() * 1024), (int) (Math.random() * 728) - 728);
-                                asteroid.load();
-                                asteroids.add(asteroid);
-                            }
+                        if (asteroidsKill == 10 || asteroidsKill == 30 || asteroidsKill == 60 || asteroidsKill == 100) {
+                            currentRound++;
+                            addAsteroidsForRound(currentRound);
+                            showRoundText = true;
+                            roundTextStartTime = System.currentTimeMillis();
                         }
 
                         Sound.explosion.play();
@@ -249,7 +243,6 @@ public class Phase extends JPanel implements ActionListener {
 
         if (showRoundText && System.currentTimeMillis() - roundTextStartTime >= roundTextDuration) {
             showRoundText = false;
-            rtimer.stop();
         }
 
         checkCollisions();
@@ -257,6 +250,7 @@ public class Phase extends JPanel implements ActionListener {
     }
 
     private void resetGame() {
+        currentRound = 1;
         initGame();
         repaint();
     }
