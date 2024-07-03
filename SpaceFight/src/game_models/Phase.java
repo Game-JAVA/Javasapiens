@@ -94,7 +94,10 @@ public class Phase extends JPanel implements ActionListener {
         }
 
         for (int i = 0; i < numAsteroids; i++) {
-            Asteroid asteroid = new Asteroid((int) (Math.random() * 1024), (int) (Math.random() * 728) - 728);
+            int x = (int) (Math.random() * (1024));
+            int y = -728 - (int) (Math.random() * 100);
+
+            Asteroid asteroid = new Asteroid(x, y);
             asteroid.load();
             asteroids.add(asteroid);
         }
@@ -207,7 +210,6 @@ public class Phase extends JPanel implements ActionListener {
                             showRoundText = true;
                             roundTextStartTime = System.currentTimeMillis();
                         }
-
                         Sound.explosion.play();
                     }
                 }
