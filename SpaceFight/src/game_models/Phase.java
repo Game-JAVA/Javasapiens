@@ -271,7 +271,7 @@ public class Phase extends JPanel implements ActionListener {
             showRoundText = false;
         }
 
-        checkCollisions(); //Checa se possui colisão
+        checkCollisions(); //Checa se possue colisão
         repaint(); //Repinta a tela com as localizações dos objetos atualizadas
     }
 
