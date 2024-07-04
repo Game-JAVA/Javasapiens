@@ -27,13 +27,14 @@ public class Phase extends JPanel implements ActionListener {
     private boolean isPaused;
     private boolean showRoundText = false;
     private long roundTextStartTime;
-    private final int roundTextDuration = 1300; // duração em milissegundos (2 segundos)
+    private final int roundTextDuration = 1300; //Duração em milissegundos
     private int currentRound = 1;
 
     public Phase() {
         setFocusable(true);
         setDoubleBuffered(true);
 
+        //Fonte das letras
         try {
             gameFont = Font.createFont(Font.TRUETYPE_FONT, new File("res/PressStart2P-Regular.ttf"));
             gameFont = gameFont.deriveFont(Font.BOLD, 20f);
@@ -44,24 +45,25 @@ public class Phase extends JPanel implements ActionListener {
             gameFont = new Font("Helvetica", Font.BOLD, 20);
         }
 
-        initGame();
-        addKeyListener(new TecladoAdapter());
+        initGame(); //Iniciar o jogo
+        addKeyListener(new TecladoAdapter());//Permite o teclado funcionar
 
         timer = new Timer(5, this);
         timer.start();
     }
 
+    //Inicio do jogo
     private void initGame() {
         Sound.soundgame.loop();
 
         ImageIcon reference = new ImageIcon("res\\background.gif");
         background = reference.getImage();
 
-        spacecraft = new Spacecraft(470, 450);
-        spacecraft.load();
+        spacecraft = new Spacecraft(470, 450); //Spawn da espaçonave
+        spacecraft.load(); //Carrega a imagem e o tamanho dela
 
-        asteroids = new ArrayList<>();
-        addAsteroidsForRound(currentRound);
+        asteroids = new ArrayList<>(); //Arraylist de asteroids
+        addAsteroidsForRound(currentRound); //Adicionando quantidade de asteroids por round
 
         inGame = true;
         isPaused = false;
@@ -73,6 +75,7 @@ public class Phase extends JPanel implements ActionListener {
         roundTextStartTime = System.currentTimeMillis();
     }
 
+    //Fases
     private void addAsteroidsForRound(int round) {
         int numAsteroids = 0;
         switch (round) {
@@ -93,35 +96,40 @@ public class Phase extends JPanel implements ActionListener {
                 break;
         }
 
+        //Criação dos asteroids
         for (int i = 0; i < numAsteroids; i++) {
             int x = (int) (Math.random() * (1024));
             int y = -728 - (int) (Math.random() * 100);
 
             Asteroid asteroid = new Asteroid(x, y);
-            asteroid.load();
-            asteroids.add(asteroid);
+            asteroid.load(); //Carrega a imagem e o tamanho dela
+            asteroids.add(asteroid); //Adiciona o asteroid
         }
     }
 
+    //Pinta tudo o que possue na tela
     @Override
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D graficos = (Graphics2D) g;
 
         if (inGame) {
-            graficos.drawImage(background, 0, 0, null);
-            graficos.drawImage(spacecraft.getImage(), spacecraft.getX(), spacecraft.getY(), this);
+            graficos.drawImage(background, 0, 0, null); //Imagem do fundo
+            graficos.drawImage(spacecraft.getImage(), spacecraft.getX(), spacecraft.getY(), this); //Imagem da espaçonave
 
+            //Score
             graficos.setFont(gameFont);
             graficos.setColor(Color.WHITE);
             graficos.drawString("Score:" + score, 10, 30);
 
+            //Colocar imagem em todos os asteroids
             for (int j = 0; j < asteroids.size(); j++) {
                 Asteroid asteroid = asteroids.get(j);
                 asteroid.load();
                 graficos.drawImage(asteroid.getImage(), asteroid.getX(), asteroid.getY(), this);
             }
 
+            //Colocar imagem em todos os tiros
             List<Shoot> shoots = spacecraft.getShoots();
             for (int i = 0; i < shoots.size(); i++) {
                 Shoot m = shoots.get(i);
@@ -129,6 +137,7 @@ public class Phase extends JPanel implements ActionListener {
                 graficos.drawImage(m.getImage(), m.getX(), m.getY(), this);
             }
 
+            //tela de pause
             if (isPaused) {
                 graficos.setFont(gameFont.deriveFont(Font.BOLD, 40f));
                 graficos.setColor(Color.YELLOW);
@@ -139,6 +148,7 @@ public class Phase extends JPanel implements ActionListener {
                 graficos.drawString("Press R to restart", 340, 370);
             }
 
+            //Informar mudança de fase
             if (showRoundText) {
                 graficos.setFont(gameFont.deriveFont(Font.BOLD, 20f));
                 graficos.setColor(Color.WHITE);
@@ -146,7 +156,10 @@ public class Phase extends JPanel implements ActionListener {
             }
 
             Toolkit.getDefaultToolkit().sync();
-        } else {
+        }
+
+        //Tela de derrota
+        else {
             ImageIcon gameOver = new ImageIcon("res\\GameOver.png");
             graficos.drawImage(gameOver.getImage(), 0, 0, null);
             Toolkit.getDefaultToolkit().sync();
@@ -160,6 +173,7 @@ public class Phase extends JPanel implements ActionListener {
             graficos.drawString("Press R to restart", 340, 470);
         }
 
+        //Tela de vitória
         if (asteroidsKill == 150) {
             inGame = false;
             ImageIcon youWin = new ImageIcon("res\\YouWin.jpeg");
@@ -173,15 +187,18 @@ public class Phase extends JPanel implements ActionListener {
         g.dispose();
     }
 
+    //Método para checar colisões
     public void checkCollisions() {
         Rectangle shapeSpacecraft = spacecraft.getBounds();
         Rectangle shapeShoot;
         Rectangle shapeAsteroid;
 
+        //Criando uma forma para a colisão do asteroid
         for (int i = 0; i < asteroids.size(); i++) {
             Asteroid tempAsteroid = asteroids.get(i);
             shapeAsteroid = tempAsteroid.getBounds();
             if (inGame) {
+                //Colisão entre a espaçonave e o asteroid
                 if (shapeSpacecraft.intersects(shapeAsteroid)) {
                     tempAsteroid.setVisible(false);
                     Sound.kill.play();
@@ -190,6 +207,7 @@ public class Phase extends JPanel implements ActionListener {
             }
         }
 
+        //Criando uma forma para a colisão do tiro
         List<Shoot> shoots = spacecraft.getShoots();
         for (int j = 0; j < shoots.size(); j++) {
             Shoot tempShoot = shoots.get(j);
@@ -198,12 +216,14 @@ public class Phase extends JPanel implements ActionListener {
                 Asteroid tempAsteroid = asteroids.get(k);
                 shapeAsteroid = tempAsteroid.getBounds();
                 if (inGame) {
+                    //Colisão entre o tiro com o asteroid
                     if (shapeShoot.intersects(shapeAsteroid)) {
                         tempAsteroid.setVisible(false);
                         tempShoot.setVisible(false);
                         score += 50;
                         asteroidsKill += 1;
 
+                        //Aparecer a mudança de fase
                         if (asteroidsKill == 10 || asteroidsKill == 30 || asteroidsKill == 60 || asteroidsKill == 100) {
                             currentRound++;
                             addAsteroidsForRound(currentRound);
@@ -217,13 +237,16 @@ public class Phase extends JPanel implements ActionListener {
         }
     }
 
+    //Ações do jogo
     @Override
     public void actionPerformed(ActionEvent e) {
+        //Se o jogo estiver pausado ou se não estiver em jogo não realiza as ações
         if (isPaused || !inGame) {
             return;
         }
 
-        spacecraft.move();
+        spacecraft.move(); //Movimentação da espaçonave
+        //Movimentação ou remoção do tiro
         List<Shoot> shoots = spacecraft.getShoots();
         for (int i = 0; i < shoots.size(); i++) {
             Shoot m = shoots.get(i);
@@ -234,6 +257,7 @@ public class Phase extends JPanel implements ActionListener {
             }
         }
 
+        //Movimentação ou remoção do asteroid
         for (int j = 0; j < asteroids.size(); j++) {
             Asteroid asteroid = asteroids.get(j);
             if (asteroid.isVisible()) {
@@ -247,38 +271,44 @@ public class Phase extends JPanel implements ActionListener {
             showRoundText = false;
         }
 
-        checkCollisions();
-        repaint();
+        checkCollisions(); //Checa se possui colisão
+        repaint(); //Repinta a tela com as localizações dos objetos atualizadas
     }
 
+    //Método para resetar o jogo
     private void resetGame() {
         currentRound = 1;
         initGame();
         repaint();
     }
 
+    //Método para o uso do teclado
     private class TecladoAdapter extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
             int code = e.getKeyCode();
 
+            //Tecla para pausar o jogo
             if (code == KeyEvent.VK_ESCAPE) {
                 if (inGame) {
                     isPaused = !isPaused;
                 }
             }
 
+            //Tecla para resetar o jogo se estive pausado ou fora de jogo
             if (code == KeyEvent.VK_R) {
                 if (isPaused || !inGame) {
                     resetGame();
                 }
             }
 
+            //Permite as açoes da espaçonave se estiver em jogo e não estiver pausado
             if (inGame && !isPaused) {
                 spacecraft.keyPressed(e);
             }
         }
 
+        //Reconhecer quando a tecla não está pressionada
         @Override
         public void keyReleased(KeyEvent e) {
             spacecraft.keyRelease(e);
