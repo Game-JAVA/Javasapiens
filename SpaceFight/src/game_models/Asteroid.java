@@ -19,7 +19,7 @@ public class Asteroid extends Character {
     }
 
     public Rectangle getBounds(){
-        return new Rectangle(getX(),getY(), getWidth()-20, getHeight());
+        return new Rectangle(getX(),getY(), getWidth()-10, getHeight());
     }
 
     //Movimentação do asteroid
