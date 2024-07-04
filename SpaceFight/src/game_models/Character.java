@@ -3,7 +3,7 @@ package game_models;
 import javax.swing.*;
 import java.awt.*;
 
-public class Character {
+public abstract class Character {
     private Image image;
     private int x, y;
     private int height, width;
@@ -61,4 +61,10 @@ public class Character {
     public void setWidth(int width) {
         this.width = width;
     }
+
+    // Carrega a imagem selecionada
+    public abstract void load();
+
+    // Obtém os limites para detecção de colisão
+    public abstract Rectangle getBounds();
 }
