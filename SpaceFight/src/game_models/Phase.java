@@ -150,11 +150,12 @@ public class Phase extends JPanel implements ActionListener {
 
             //Informar mudança de fase
             if (showRoundText) {
-                graficos.setFont(gameFont.deriveFont(Font.BOLD, 20f));
-                graficos.setColor(Color.WHITE);
-                graficos.drawString("Round " + currentRound, 440, 364);
+                if (!isPaused){
+                    graficos.setFont(gameFont.deriveFont(Font.BOLD, 20f));
+                    graficos.setColor(Color.WHITE);
+                    graficos.drawString("Round " + currentRound, 440, 364);
+                }
             }
-
             Toolkit.getDefaultToolkit().sync();
         }
 
