@@ -98,7 +98,7 @@ public class Phase extends JPanel implements ActionListener {
 
         //Criação dos asteroids
         for (int i = 0; i < numAsteroids; i++) {
-            int x = (int) (Math.random() * (1024));
+            int x = (int) (Math.random() * (920));
             int y = -728 - (int) (Math.random() * 100);
 
             Asteroid asteroid = new Asteroid(x, y);

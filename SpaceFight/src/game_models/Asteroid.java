@@ -46,7 +46,7 @@ public class Asteroid extends Character {
 
     // Quando chegar no fim da tela, o asteroide volta para o começo
     private void resetPosition() {
-        setX((int) (Math.random() * 1024)); // Nova posição X aleatória
+        setX((int) (Math.random() * 920)); // Nova posição X aleatória
         setY(-getHeight()); // Reposicionar no topo, fora da tela
     }
 
