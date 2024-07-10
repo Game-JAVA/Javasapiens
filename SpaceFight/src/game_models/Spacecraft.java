@@ -38,10 +38,10 @@ public class Spacecraft extends Character {
         int newX = getX() + dx;
         int newY = getY() + dy;
 
-        if (newX >= 0 - (getWidth() * 0.38) && newX <= SCREEN_WIDTH - (getWidth() * 0.6)) {
+        if (newX >= 0 - (getWidth() * 0) && newX <= SCREEN_WIDTH - (getWidth() * 1.2)) {
             super.setX(newX);
         }
-        if (newY >= 0 - (getHeight() * 0.5) && newY <= SCREEN_HEIGHT - (getHeight() * 0.75)) {
+        if (newY >= 0 - (getHeight() * 0.2) && newY <= SCREEN_HEIGHT - (getHeight() * 0.9)) {
             super.setY(newY);
         }
     }
