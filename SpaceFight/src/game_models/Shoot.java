@@ -3,8 +3,6 @@ package game_models;
 import java.awt.*;
 
 public class Shoot extends Character {
-
-
     private boolean isVisible;
 
     private static int VELOCIDADE = -4;
