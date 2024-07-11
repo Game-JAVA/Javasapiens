@@ -1,6 +1,7 @@
 package game_models;
 
 import java.awt.*;
+import java.util.Arrays;
 
 public class Asteroid extends Character {
     private int speed;
@@ -19,9 +20,13 @@ public class Asteroid extends Character {
 
     // Seleciona a imagem do asteroide e seu tamanho
     private void selectImage() {
-        String[] asteroidImages = {"res\\asteroid.gif", "res\\asteroidSmall.gif"};
-        imageFile = asteroidImages[toggleImage ? 0 : 1]; // Alterna entre as duas imagens
-        toggleImage = !toggleImage; // Alterna o valor de toggleImage
+        if (isVisible) {
+            String[] asteroidImages = {"res\\asteroid.gif", "res\\asteroidSmall.gif"};
+            imageFile = asteroidImages[toggleImage ? 0 : 1]; // Alterna entre as duas imagens
+            toggleImage = !toggleImage; // Alterna o valor de toggleImage
+        } else {
+            imageFile = "res\\explosion.png";
+        }
     }
 
     // Carrega a imagem selecionada
@@ -55,8 +60,10 @@ public class Asteroid extends Character {
         return isVisible;
     }
 
-    // Define a visibilidade do asteroide
+    // Define a visibilidade do asteroide e seleciona a imagem correspondente
     public void setVisible(boolean visible) {
         isVisible = visible;
+        selectImage(); // Atualiza a imagem com base na nova visibilidade
+        load(); // Recarrega a imagem após a atualização
     }
 }
