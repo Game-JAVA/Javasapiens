@@ -127,7 +127,6 @@ classDiagram
     }
 
     class Shoot {
-        - Image image
         - boolean isVisible
         - int speed
         + void load()
