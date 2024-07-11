@@ -4,7 +4,6 @@ import java.awt.*;
 
 public class Shoot extends Character {
 
-    private Image image;
 
     private boolean isVisible;
 
